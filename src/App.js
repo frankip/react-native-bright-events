@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
+// local imports
+import Approutes from './Routes';
 import './static/App.css';
-import Registration from './components/Registration';
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Registration />
+        <Approutes />
       </div>
     );
   }

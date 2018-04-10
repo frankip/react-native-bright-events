@@ -1,29 +1,29 @@
-import React, { Component } from "react";
-// import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Registration extends Component {
   constructor() {
     super();
     this.state = {
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: ""
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
   handleOnSubmit(e) {
-    // console.log(
-    //     this.refs.first_name.value,
-    //     this.refs.last_name.value,
-    //     this.refs.email.value,
-    //     this.refs.password.value);
+    console.log(
+      this.refs.first_name.value,
+      this.refs.last_name.value,
+      this.refs.email.value,
+      this.refs.password.value);
     // console.log(e);
-    let values = new FormData();
-    values.set("first_name", this.refs.first_name.value);
-    values.set("last_name", this.refs.last_name.value);
-    values.set("email", this.refs.email.value);
-    values.set("password", this.refs.password.value);
+    const values = new FormData();
+    values.set('first_name', this.refs.first_name.value);
+    values.set('last_name', this.refs.last_name.value);
+    values.set('email', this.refs.email.value);
+    values.set('password', this.refs.password.value);
 
     // this.props.UserReg(values);
     e.preventDefault();
@@ -34,9 +34,9 @@ class Registration extends Component {
     // this.refs.password.value='';
   }
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  // handleChange = e => {
+  //   this.setState({ [e.target.name]: e.target.value });
+  // };
   render() {
     return (
       <div className="body">
@@ -54,12 +54,12 @@ class Registration extends Component {
         </div>
         <div className="form">
           <ul className="tab-group">
-            {/* <li className="tab active">
-              <Link to={"/"}>Signup</Link>
+            <li className="tab active">
+              <Link to="/">Signup</Link>
             </li>
             <li className="tab">
-              <Link to={"/login"}>login</Link>
-            </li> */}
+              <Link to="/login">login</Link>
+            </li>
           </ul>
           <div className="tab-content">
             <div id="signup">
@@ -69,7 +69,7 @@ class Registration extends Component {
                 <div className="top-row">
                   <div className="field-wrap">
                     <label>
-                      {" "}
+                      {' '}
                       First Name<span className="req">*</span>
                     </label>
                     <input
@@ -82,7 +82,7 @@ class Registration extends Component {
                   </div>
                   <div className="field-wrap">
                     <label>
-                      {" "}
+                      {' '}
                       Last Name<span className="req">*</span>
                     </label>
                     <input
@@ -96,8 +96,8 @@ class Registration extends Component {
                 </div>
                 <div className="field-wrap">
                   <label>
-                    {" "}
-                    Email Address<span className="req">*</span>{" "}
+                    {' '}
+                    Email Address<span className="req">*</span>{' '}
                   </label>
                   <input
                     type="email"
@@ -109,8 +109,8 @@ class Registration extends Component {
                 </div>
                 <div className="field-wrap">
                   <label>
-                    {" "}
-                    Set A Password<span className="req">*</span>{" "}
+                    {' '}
+                    Set A Password<span className="req">*</span>{' '}
                   </label>
                   <input
                     type="password"
@@ -135,17 +135,17 @@ class Registration extends Component {
               <form action="index.html" method="post">
                 <div className="field-wrap">
                   <label>
-                    {" "}
-                    Email Address<span className="req">*</span>{" "}
+                    {' '}
+                    Email Address<span className="req">*</span>{' '}
                   </label>
-                  <input type="email" required />{" "}
+                  <input type="email" required />{' '}
                 </div>
                 <div className="field-wrap">
                   <label>
-                    {" "}
-                    Password<span className="req">*</span>{" "}
+                    {' '}
+                    Password<span className="req">*</span>{' '}
                   </label>
-                  <input type="password" required />{" "}
+                  <input type="password" required />{' '}
                 </div>
               </form>
             </div>
@@ -157,4 +157,3 @@ class Registration extends Component {
 }
 
 export default Registration;
-// export default connect(mapStateToProps, mapDispatchToProps)(Registration);
