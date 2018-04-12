@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 class Registration extends Component {
   constructor() {
@@ -24,6 +25,27 @@ class Registration extends Component {
     }
     console.log(payload)
 
+    axios.post(ROOT + "/auth/register/", payload)
+    .then(function (response) {
+    console.log(response.data);
+    if(response.data.code === 202){
+    console.log("Login new successfull");
+    console.log(response.data);
+    // var uploadScreen=[];
+    // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
+    // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+    }
+    // else{
+    // console.log("Username does not exists");
+    // alert("Username does not exist");
+    // }
+    })
+    .catch(function (error) {
+      console.log("asdfg");
+      console.log(error.response.data.message);
+    });
+  
+
    
     // this.setState = ({ 
     //   first_name: this.refs.first_name.value, 
@@ -38,6 +60,7 @@ class Registration extends Component {
 
   handleChange = e => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
+    console.log(this.state)
     
   };
   render() {
