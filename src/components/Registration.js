@@ -13,30 +13,33 @@ class Registration extends Component {
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
   handleOnSubmit(e) {
-    console.log(
-      this.refs.first_name.value,
-      this.refs.last_name.value,
-      this.refs.email.value,
-      this.refs.password.value);
-    // console.log(e);
-    const values = new FormData();
-    values.set('first_name', this.refs.first_name.value);
-    values.set('last_name', this.refs.last_name.value);
-    values.set('email', this.refs.email.value);
-    values.set('password', this.refs.password.value);
-
-    // this.props.UserReg(values);
     e.preventDefault();
+    const ROOT = 'http://127.0.0.1:5000/api';
+    // console.log(this.state.first_name);
+    let payload = {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      password: this.state.password,
+    }
+    console.log(payload)
+
+   
+    // this.setState = ({ 
+    //   first_name: this.refs.first_name.value, 
+    //   last_name: this.refs.last_name.value, 
+    //   email: this.refs.email.value, 
+    //   password: this.refs.password.value });
+    
+
+
     e.target.reset();
-    // this.refs.first_name.value='';
-    // this.refs.last_name.value='';
-    // this.refs.email.value='';
-    // this.refs.password.value='';
   }
 
-  // handleChange = e => {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // };
+  handleChange = e => {
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
+    
+  };
   render() {
     return (
       <div className="body">
