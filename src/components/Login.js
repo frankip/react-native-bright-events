@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from "axios";
 // local imports
 
 class Login extends Component {
@@ -12,17 +13,32 @@ class Login extends Component {
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
   handleOnSubmit(e) {
-    console.log(this.refs.email.value, this.refs.password.value);
-
-    const credentials = new FormData();
-    credentials.set("email", this.refs.email.value);
-    credentials.set("password", this.refs.password.value);
-
     e.preventDefault();
+    const ROOT = "http://127.0.0.1:5000/api";
+    // console.log(this.state.first_name);
+    let payload = { 
+      email: this.state.email, 
+      password: this.state.password 
+    };
+    console.log(payload);
+
+    axios
+      .post(ROOT + "/auth/login/", payload)
+      .then(function(response) {
+        console.log(response.data);
+        if (response.data.code === 202) {
+          console.log("Login new successfull");
+          console.log(response.data);
+        }
+      })
+      .catch(function(error) {
+        console.log(error.response.data.message);
+      });
     e.target.reset();
   }
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state)
   };
 
   render() {
