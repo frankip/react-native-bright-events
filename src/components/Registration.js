@@ -32,14 +32,7 @@ class Registration extends Component {
     if(response.data.code === 202){
     console.log("Login new successfull");
     console.log(response.data);
-    // var uploadScreen=[];
-    // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-    // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
     }
-    // else{
-    // console.log("Username does not exists");
-    // alert("Username does not exist");
-    // }
     })
     .catch(function (error) {
       console.log("asdfg");
