@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import toastr from "toastr";
 // local imports
 
 class Login extends Component {
@@ -25,6 +26,7 @@ class Login extends Component {
     axios
       .post(ROOT + "/auth/login/", payload)
       .then(function(response) {
+        toastr.success(response.data.message);
         console.log(response.data);
         if (response.data.code === 202) {
           console.log("Login new successfull");

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import toastr from "toastr";
 
 class Registration extends Component {
   constructor() {
@@ -24,9 +25,9 @@ class Registration extends Component {
       password: this.state.password,
     }
     console.log(payload)
-
     axios.post(ROOT + "/auth/register/", payload)
     .then(function (response) {
+    toastr.success(response.data.message);
     console.log(response.data);
     if(response.data.code === 202){
     console.log("Login new successfull");
