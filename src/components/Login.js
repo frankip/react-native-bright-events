@@ -61,7 +61,7 @@ class Login extends Component {
         <div className="form">
           <ul className="tab-group">
             <li className="tab">
-              <Link to="/">Signup</Link>
+              <Link to="/signup">Signup</Link>
             </li>
             <li className="tab active">
               <Link to="/login">login</Link>

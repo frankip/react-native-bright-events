@@ -58,8 +58,7 @@ class Registration extends Component {
     
   };
   render() {
-    return (
-      <div className="body">
+    return <div className="body">
         <div className="intro">
           <div>
             <h1>
@@ -75,7 +74,7 @@ class Registration extends Component {
         <div className="form">
           <ul className="tab-group">
             <li className="tab active">
-              <Link to="/">Signup</Link>
+              <Link to="/signup">Signup</Link>
             </li>
             <li className="tab">
               <Link to="/login">login</Link>
@@ -89,63 +88,35 @@ class Registration extends Component {
                 <div className="top-row">
                   <div className="field-wrap">
                     <label>
-                      {' '}
+                      {" "}
                       First Name<span className="req">*</span>
                     </label>
-                    <input
-                      type="text"
-                      name="first_name"
-                      required
-                      ref="first_name"
-                      onChange={this.handleChange}
-                    />
+                    <input type="text" name="first_name" required ref="first_name" onChange={this.handleChange} />
                   </div>
                   <div className="field-wrap">
                     <label>
-                      {' '}
+                      {" "}
                       Last Name<span className="req">*</span>
                     </label>
-                    <input
-                      type="text"
-                      name="last_name"
-                      required
-                      ref="last_name"
-                      onChange={this.handleChange}
-                    />
+                    <input type="text" name="last_name" required ref="last_name" onChange={this.handleChange} />
                   </div>
                 </div>
                 <div className="field-wrap">
                   <label>
-                    {' '}
-                    Email Address<span className="req">*</span>{' '}
+                    {" "}
+                    Email Address<span className="req">*</span>{" "}
                   </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    ref="email"
-                    onChange={this.handleChange}
-                  />
+                  <input type="email" name="email" required ref="email" onChange={this.handleChange} />
                 </div>
                 <div className="field-wrap">
                   <label>
-                    {' '}
-                    Set A Password<span className="req">*</span>{' '}
+                    {" "}
+                    Set A Password<span className="req">*</span>{" "}
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    required
-                    ref="password"
-                    onChange={this.handleChange}
-                  />
+                  <input type="password" name="password" required ref="password" onChange={this.handleChange} />
                 </div>
                 {/* <a type="submit" value="submit" className="button button-block">Get Started</a>  */}
-                <button
-                  type="submit"
-                  value="submit"
-                  className="button button-block"
-                >
+                <button type="submit" value="submit" className="button button-block">
                   Get Started
                 </button>
               </form>
@@ -155,24 +126,23 @@ class Registration extends Component {
               <form action="index.html" method="post">
                 <div className="field-wrap">
                   <label>
-                    {' '}
-                    Email Address<span className="req">*</span>{' '}
+                    {" "}
+                    Email Address<span className="req">*</span>{" "}
                   </label>
-                  <input type="email" required />{' '}
+                  <input type="email" required />{" "}
                 </div>
                 <div className="field-wrap">
                   <label>
-                    {' '}
-                    Password<span className="req">*</span>{' '}
+                    {" "}
+                    Password<span className="req">*</span>{" "}
                   </label>
-                  <input type="password" required />{' '}
+                  <input type="password" required />{" "}
                 </div>
               </form>
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 

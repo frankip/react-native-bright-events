@@ -10,15 +10,15 @@ class Navigation extends Component {
           <div className="nav-mobile">
             <ul className="left">
               <li>
-                <Link to="/events">Home</Link>
+                <Link to="/">Home</Link>
                 {/* <a href="index.html"><i className="fa fa-home"></i> Home</a> */}
               </li>
               <li>
-                <Link to="/events">Categories</Link>
+                <Link to="/">Categories</Link>
                 {/* <a href="#"><i className="fa fa-book"></i> Categories</a> */}
               </li>
               <li>
-                <Link to="/events">Most Popular</Link>
+                <Link to="/">Most Popular</Link>
                 {/* <a href="#"><i className="fa fa-fire"></i> Most Popular</a> */}
               </li>
             </ul>

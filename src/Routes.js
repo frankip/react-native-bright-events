@@ -9,9 +9,9 @@ export default () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Registration} />
+        <Route exact path="/" component={Main} />
         <Route path="/login" component={Login} />
-        <Route path="/events" component={Main} />
+        <Route path="/signup" component={Registration} />
       </Switch>
     </Router>
   );

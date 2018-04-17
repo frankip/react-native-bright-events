@@ -8,7 +8,7 @@ class EventCard extends Component {
       <div>
         <div className="column">
           <div className="callout">
-            <img className="thumbnail" src="http://lorempixel.com/400/200/nightlife" alt="image-one" />
+            <img className="thumbnail" src="http://lorempixel.com/400/200/nightlife" alt="event_image" />
             <h5>{this.props.title }</h5>
             <i className="fa fa-calendar fa-2x fa-fw" aria-hidden="true"></i>
             <p className="small">{this.props.date}</p>
