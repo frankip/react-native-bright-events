@@ -51,7 +51,7 @@ a:hover {
     background-position: center;
     background-repeat: no-repeat;
     /*    -webkit-filter: blur(2px);*/
-    z-index: -1;
+    z-index: 1;
 }
 
 .intro {

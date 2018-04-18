@@ -38,17 +38,6 @@ class Registration extends Component {
       console.log("asdfg");
       console.log(error.response.data.message);
     });
-  
-
-   
-    // this.setState = ({ 
-    //   first_name: this.refs.first_name.value, 
-    //   last_name: this.refs.last_name.value, 
-    //   email: this.refs.email.value, 
-    //   password: this.refs.password.value });
-    
-
-
     e.target.reset();
   }
 

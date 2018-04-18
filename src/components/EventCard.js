@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class EventCard extends Component {
-  // console.log("asdcvbnm,.nbvc",this.props)
   render() {
     console.log('props', this.props);
     return (
