@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const EventCardDetails = () => {
   return (
@@ -26,3 +26,6 @@ const EventCardDetails = () => {
     </div>
   );
 };
+
+export default EventCardDetails;
+

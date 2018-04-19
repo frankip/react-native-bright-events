@@ -24,19 +24,14 @@ class Main extends Component {
         this.setState({ ...this.state, eventList: response.data }, () => {
           // console.log(" main", this.state);
         });
-        // console.log(eventList);
       })
       .catch(function (error) {
         console.log('asdfg');
         console.log(error);
       });
-    // this.setState({ ...this.state, eventList: eventList });
-    // console.log(' main',this.state);
   }
 
   render() {
-    // console.log(" main datsa", this.state.eventList);
-    // console.log(" main dats jk", this.state.props);
     const eventlist = this.state.eventList.map((event) => {
       return (
       // console.log(event);
@@ -55,7 +50,6 @@ class Main extends Component {
 
     return (
       <div>
-        <Navigation />
         <section className="row">
           <div id="eventCard" className="row small-up-1 medium-up-2 large-up-3">
             {eventlist}
