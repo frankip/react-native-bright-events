@@ -1,6 +1,7 @@
 import React from 'react';
 
 const EventCardDetails = () => {
+  console.log("asdfghj");
   return (
     <div>
       <section className="row wide event-container">

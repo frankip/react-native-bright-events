@@ -13,7 +13,9 @@ export default () => {
         <Route exact path="/" component={Main} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Registration} />
-        <Route path="event/:id" component={EventCardDetails} />
+        <Route path="/test" component={EventCardDetails} />
+        <Route path="/events/:id" component={EventCardDetails} />
+        
       </Switch>
     </Router>
   );
