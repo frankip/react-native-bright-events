@@ -33,6 +33,7 @@ class Login extends Component {
         toastr.warning(error.response.data.message);
         console.log(error.response.data.message);
       });
+      this.props.history.push("/");
     e.target.reset();
   }
   handleChange = e => {

@@ -34,6 +34,7 @@ class Registration extends Component {
       toastr.warning(error.response.data.message);
       console.log(error.response.data.message);
     });
+    this.props.history.push("/login");
     e.target.reset();
   }
 
