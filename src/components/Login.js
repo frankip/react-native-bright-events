@@ -27,15 +27,21 @@ class Login extends Component {
       .post(ROOT + "/auth/login/", payload)
       .then(function(response) {
         toastr.success(response.data.message);
-        console.log(response.data);
+        console.log(response.data.status_code);
+        localStorage.setItem('access_token',response.data.access_token);
+        
+        // this.props.history.push("/");
       })
       .catch(function(error) {
         toastr.warning(error.response.data.message);
         console.log(error.response.data.message);
+        // this.props.history.push("/");
       });
-      this.props.history.push("/");
+       console.log('local tingz',localStorage.getItem("access_token"));
+
     e.target.reset();
   }
+ 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
     console.log(this.state)
