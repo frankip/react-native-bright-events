@@ -29,13 +29,9 @@ class Registration extends Component {
     .then(function (response) {
     toastr.success(response.data.message);
     console.log(response.data);
-    if(response.data.code === 202){
-    console.log("Login new successfull");
-    console.log(response.data);
-    }
     })
     .catch(function (error) {
-      console.log("asdfg");
+      toastr.warning(error.response.data.message);
       console.log(error.response.data.message);
     });
     e.target.reset();
