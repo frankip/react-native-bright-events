@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import browserHistory from 'react-router';
 import axios from "axios";
 import toastr from "toastr";
 // local imports
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      message: "",
+      status: 400
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
@@ -25,19 +28,34 @@ class Login extends Component {
 
     axios
       .post(ROOT + "/auth/login/", payload)
-      .then(function(response) {
+      .then(response => {
+        this.setState(
+          { status: response.status, 'message': response.data.message },
+          () => {
+            // console.log(" main inside stat", this.state);
+          }
+        );
+        localStorage.setItem("access_token", response.data.access_token);
+        window.location.assign('/');
         toastr.success(response.data.message);
-        console.log(response.data.status_code);
-        localStorage.setItem('access_token',response.data.access_token);
+        // console.log(response.status);
         
-        // this.props.history.push("/");
+        // this.setState({ ...this.state, status: response.status })
       })
-      .catch(function(error) {
-        toastr.warning(error.response.data.message);
-        console.log(error.response.data.message);
+      .catch(error => {
+        window.location.assign('/login');
+        toastr.warning(error.response.data.message);        
+
         // this.props.history.push("/");
       });
-       console.log('local tingz',localStorage.getItem("access_token"));
+      // console.log("out main", this.state);
+      //  if (this.state.status === 200) {
+        // this.props.history.push("/");
+      //   console.log('gggggggggg');
+      //   }
+
+      
+      //  console.log('local tingz',localStorage.getItem("access_token"));
 
     e.target.reset();
   }
@@ -48,8 +66,11 @@ class Login extends Component {
   };
 
   render() {
-    return (
-      <div className="body">
+     console.log(" main inside render ", this.state);
+    return <div className="body">
+        {/* <div>
+          {this.state.message ? toastr.success(this.state.message) : ""};
+        </div> */}
         <div className="intro">
           <div>
             <h1>
@@ -80,26 +101,14 @@ class Login extends Component {
                     {" "}
                     Email Address<span className="req">*</span>{" "}
                   </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    ref="email"
-                    onChange={this.handleChange}
-                  />
+                  <input type="email" name="email" required ref="email" onChange={this.handleChange} />
                 </div>
                 <div className="field-wrap">
                   <label>
                     {" "}
                     Set A Password<span className="req">*</span>{" "}
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    required
-                    ref="password"
-                    onChange={this.handleChange}
-                  />
+                  <input type="password" name="password" required ref="password" onChange={this.handleChange} />
                 </div>
                 <p className="forgot">
                   <Link to="/">Forgot Password?</Link>
@@ -135,8 +144,7 @@ class Login extends Component {
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 

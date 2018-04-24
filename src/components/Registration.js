@@ -28,13 +28,14 @@ class Registration extends Component {
     axios.post(ROOT + "/auth/register/", payload)
     .then(function (response) {
     toastr.success(response.data.message);
+     window.location.assign("/login");
     console.log(response.data);
     })
     .catch(function (error) {
       toastr.warning(error.response.data.message);
       console.log(error.response.data.message);
+       window.location.assign("/signup");
     });
-    this.props.history.push("/login");
     e.target.reset();
   }
 
