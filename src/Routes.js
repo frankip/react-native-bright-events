@@ -15,7 +15,6 @@ export default () => {
         <Route path="/signup" component={Registration} />
         <Route path="/test" component={EventCardDetails} />
         <Route path="/events/:id" component={EventCardDetails} />
-        
       </Switch>
     </Router>
   );

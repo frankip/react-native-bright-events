@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
-import axios from "axios";
+import axios from 'axios';
+import toastr from "toastr";
+import tokenProvider from "axios-token-interceptor";
+
+
+const ROOT = "http://127.0.0.1:5000/api";
+const instance = axios.create({});
 
 class EventCardDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id:'',
+      id: '',
       event: '',
-      location:'',
-      category:'',
-      date:'',
-    }
+      location: '',
+      category: '',
+      date: '',
+    };
   }
 
   componentDidMount() {
-    const ROOT = "http://127.0.0.1:5000/api";
-    let eventId = this.props.match.params.id;
-    // console.log("id", eventId);
+    const eventId = this.props.match.params.id;
     axios
-      .get(`${ROOT}/events/` + eventId.toString())
+      .get(`${ROOT}/events/${  eventId.toString()}`)
       .then(response => {
-        // toastr.success(response.data.message);
-        console.log(response.data.event);
+        // console.log(response.data.event);
         this.setState(
           {
             ...this.state,
@@ -32,13 +35,38 @@ class EventCardDetails extends Component {
             date: response.data.date,
           },
           () => {
-            console.log(" main", this.state);
-          }
+          },
         );
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
+  }
+
+  handleRsvp = () => {
+    const eventId = this.props.match.params.id;
+    instance.interceptors.request.use(tokenProvider({
+        getToken: () => localStorage.getItem("access_token")      
+      }));
+
+    instance.post(`${ROOT}/events/${eventId.toString()}/rsvp/`).then((response) => {
+          toastr.success(response.data.message);
+          console.log("hgv", response)
+    }).catch(function(error) {
+        toastr.warning(error.response.data.message);
+        console.log(error.response.data.message);
+      });     
+    
+    // axios
+    //   .post(`${ROOT}/events/${eventId.toString()}/rsvp`)
+    //   .then(response => {
+    //     // toastr.success(response.data.message);
+    //     console.log(response.data)
+    //   })
+    //   .catch(function(error) {
+    //     toastr.warning(error.response.data.message);
+    //     console.log(error.response.data.message);
+    //   });
   }
 
 
@@ -56,7 +84,8 @@ class EventCardDetails extends Component {
             <h3>Description</h3>
             <p> Odit et sint temporibus facilis omnis molestiae et. Et laborum sint dolorem eveniet. Qui quaerat reprehenderit omnis provident. Necessitatibus blanditiis esse delectus ipsum. Non quibusdam quaerat laborum. Fugit ipsa possimus blanditiis possimus cumque perspiciatis. </p>
           </div>
-          <div className="column large-3 small-12"> <a className="button expanded">RSVP</a>
+          <div className="column large-3 small-12"> 
+          <button className="button expanded" onClick={this.handleRsvp}>RSVP</button>
             <div className="row interactions">
               <div className="right">
                 <li><a href="#"><i className="fa fa-pencil"></i> </a></li>
