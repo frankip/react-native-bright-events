@@ -35,16 +35,22 @@ class Login extends Component {
             // console.log(" main inside stat", this.state);
           }
         );
-        localStorage.setItem("access_token", response.data.access_token);
-        window.location.assign('/');
         toastr.success(response.data.message);
+        localStorage.setItem("access_token", response.data.access_token);
+        setTimeout(function() {
+          window.location.assign("/");
+        }, 1000);   
+        // window.location.assign('/');
+        // toastr.success(response.data.message);
         // console.log(response.status);
         
         // this.setState({ ...this.state, status: response.status })
       })
       .catch(error => {
-        window.location.assign('/login');
-        toastr.warning(error.response.data.message);        
+        toastr.warning(error.response.data.message);
+        setTimeout(function() {
+          window.location.assign("/login");
+        }, 2000);         
 
         // this.props.history.push("/");
       });
