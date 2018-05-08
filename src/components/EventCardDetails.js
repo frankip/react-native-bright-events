@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import toastr from "toastr";
 import tokenProvider from "axios-token-interceptor";
+import AddEventsForms from './AddEventForm';
 
 
 const ROOT = "http://127.0.0.1:5000/api";
@@ -12,37 +13,39 @@ class EventCardDetails extends Component {
     super(props);
     this.state = {
       id: '',
-      event: '',
+      event: {},
       location: '',
       category: '',
       date: '',
       token: ''
     };
-    // const eventId = this.props.match.params.id;
   }
 
-  componentDidMount() {
-    // const eventId = this.props.match.params.id;
-    // axios
-    //   .get(`${ROOT}/events/${  eventId.toString()}`)
-    //   .then(response => {
-    //     // console.log(response.data.event);
-    //     // this.setState(
-    //     //   {
-    //     //     ...this.state,
-    //     //     id: response.data.id,
-    //     //     event: response.data.event,
-    //     //     location: response.data.location,
-    //     //     category: response.data.category,
-    //     //     date: response.data.date,
-    //     //   },
-    //     //   () => {
-    //     //   },
-    //     // );
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+  getEventFromId () {
+    const eventId = this.props.match.params.id;
+    let event = {};
+
+    axios
+      .get(`${ROOT}/events/${  eventId.toString()}`)
+      .then(response => {
+        console.log(response.data);
+        this.setState({ event: response.data });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      return event;
+  }
+
+
+  componentWillMount() {
+
+    let eventDetails;
+    if (this.props.location.state) {
+      this.setState({ event: this.props.location.state.event });
+    } else {
+      this.getEventFromId();
+    }
   }
 
   handleRsvp = () => {
@@ -67,11 +70,9 @@ class EventCardDetails extends Component {
     console.log("edit it");
   }
   handleDelete = () =>{
-    console.log("event", this.props.location.state.event.id);
 
     let token = localStorage.getItem("access_token");
-    let IDEvent = this.props.location.state.event.id;
-
+    let IDEvent = this.state.event.id;
     instance.interceptors.request.use(tokenProvider({
       getToken: () => localStorage.getItem("access_token")
       }));
@@ -89,16 +90,14 @@ class EventCardDetails extends Component {
   }
 
   render() {
-    // console.log("sdfggj", this.props.location.state.event);
-    const event = this.props.location.state.event;
-    
-    return (
-    <div>
+
+    console.log(this.state);
+    return <div>
         <section className="row wide event-container">
           <div className="overlay" />
-          <h2 className="text-display">{event.title}</h2>
-          <h3 className="text-display">{event.date}</h3>
-          <h4 className="text-display">{event.location}</h4>
+          <h2 className="text-display">{this.state.event.title || this.state.event.event}</h2>
+          <h3 className="text-display">{this.state.event.date}</h3>
+          <h4 className="text-display">{this.state.event.location}</h4>
         </section>
         <section className="row event-description">
           <div className="column large-8 small-12">
@@ -132,8 +131,7 @@ class EventCardDetails extends Component {
             </div>
           </div>
         </section>
-      </div>
-    );
+      </div>;
   }
 }
 
