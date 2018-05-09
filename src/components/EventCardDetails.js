@@ -12,11 +12,7 @@ class EventCardDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
       event: {},
-      location: '',
-      category: '',
-      date: '',
       token: ''
     };
   }
@@ -28,7 +24,6 @@ class EventCardDetails extends Component {
     axios
       .get(`${ROOT}/events/${  eventId.toString()}`)
       .then(response => {
-        console.log(response.data);
         this.setState({ event: response.data });
       })
       .catch(function (error) {
@@ -49,8 +44,8 @@ class EventCardDetails extends Component {
   }
 
   handleRsvp = () => {
-    const eventId = this.props.match.params.id;
-    const token = localStorage.getItem("access_token")
+    let eventId = this.props.match.params.id;
+    let token = localStorage.getItem("access_token")
   
     instance.interceptors.request.use(tokenProvider({
         getToken: () => localStorage.getItem("access_token")
@@ -59,10 +54,8 @@ class EventCardDetails extends Component {
     instance.post(`${ROOT}/events/${eventId.toString()}/rsvp/`)
     .then((response) => {
           toastr.success(response.data.message);
-          console.log("hgv", response)
     }).catch(function(error) {
         toastr.warning(error.response.data.message);
-        console.log(error.response.data.message);
       });
   }
   
@@ -90,8 +83,6 @@ class EventCardDetails extends Component {
   }
 
   render() {
-
-    console.log(this.state);
     return <div>
         <section className="row wide event-container">
           <div className="overlay" />

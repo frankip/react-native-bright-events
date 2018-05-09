@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 // local imports
-import Navigation from './Navigation';
 import EventCard from './EventCard';
 
 
@@ -20,13 +19,10 @@ class Main extends Component {
     axios.get(`${ROOT}/events/`)
       .then(response => {
         // toastr.success(response.data.message);
-        // console.log(response.data);
         this.setState({ ...this.state, eventList: response.data }, () => {
-          // console.log(" main", this.state);
         });
       })
       .catch(function (error) {
-        console.log('asdfg');
         console.log(error);
       });
   }
@@ -34,11 +30,10 @@ class Main extends Component {
   render() {
     const eventlist = this.state.eventList.map((event) => {
       return (
-      // console.log(event);
         <EventCard
           key={event.id}
           id={event.id}
-          title={event.event}
+          event={event.event}
           location={event.location}
           date={event.date}
           category={event.category}
