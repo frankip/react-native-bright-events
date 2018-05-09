@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // local imports
 import EventCard from './EventCard';
+import Navigation from './Navigation';
 
 
 class Main extends Component {
@@ -45,6 +46,7 @@ class Main extends Component {
 
     return (
       <div>
+        <Navigation />
         <section className="row">
           <div id="eventCard" className="row small-up-1 medium-up-2 large-up-3">
             {eventlist}

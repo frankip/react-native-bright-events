@@ -3,6 +3,7 @@ import axios from 'axios';
 import toastr from "toastr";
 import tokenProvider from "axios-token-interceptor";
 import AddEventsForms from './AddEventForm';
+import Navigation from './Navigation';
 
 
 const ROOT = "http://127.0.0.1:5000/api";
@@ -83,7 +84,9 @@ class EventCardDetails extends Component {
   }
 
   render() {
-    return <div>
+    return (
+    <div>
+      <Navigation/>
         <section className="row wide event-container">
           <div className="overlay" />
           <h2 className="text-display">{this.state.event.title || this.state.event.event}</h2>
@@ -122,7 +125,7 @@ class EventCardDetails extends Component {
             </div>
           </div>
         </section>
-      </div>;
+      </div>);
   }
 }
 
