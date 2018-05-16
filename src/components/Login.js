@@ -19,50 +19,26 @@ class Login extends Component {
   handleOnSubmit(e) {
     e.preventDefault();
     const ROOT = "http://127.0.0.1:5000/api";
-    // console.log(this.state.first_name);
     let payload = { 
       email: this.state.email, 
       password: this.state.password 
     };
-    // console.log(payload);
 
     axios
       .post(ROOT + "/auth/login/", payload)
-      .then(response => {
+      .then((response) => {
         this.setState(
           { status: response.status, 'message': response.data.message },
           () => {
-            // console.log(" main inside stat", this.state);
           }
         );
         toastr.success(response.data.message);
         localStorage.setItem("access_token", response.data.access_token);
-        setTimeout(function() {
-          window.location.assign("/");
-        }, 1000);   
-        // window.location.assign('/');
-        // toastr.success(response.data.message);
-        // console.log(response.status);
-        
-        // this.setState({ ...this.state, status: response.status })
+        this.props.history.push("/");
       })
       .catch(error => {
         toastr.warning(error.response.data.message);
-        setTimeout(function() {
-          window.location.assign("/login");
-        }, 2000);         
-
-        // this.props.history.push("/");
       });
-      // console.log("out main", this.state);
-      //  if (this.state.status === 200) {
-        // this.props.history.push("/");
-      //   console.log('gggggggggg');
-      //   }
-
-      
-      //  console.log('local tingz',localStorage.getItem("access_token"));
-
     e.target.reset();
   }
  
@@ -74,9 +50,6 @@ class Login extends Component {
   render() {
      console.log(" main inside render ", this.state);
     return <div className="body">
-        {/* <div>
-          {this.state.message ? toastr.success(this.state.message) : ""};
-        </div> */}
         <div className="intro">
           <div>
             <h1>
@@ -99,22 +72,14 @@ class Login extends Component {
             </li>
           </ul>
           <div className="tab-content">
-            <div id="signup">
+            <div id="login">
               <h3>Welcome Back!</h3>
               <form method="POST" onSubmit={this.handleOnSubmit}>
                 <div className="field-wrap">
-                  <label>
-                    {" "}
-                    Email Address<span className="req">*</span>{" "}
-                  </label>
-                  <input type="email" name="email" required ref="email" onChange={this.handleChange} />
+                <input type="email" name="email" placeholder="Email" required ref="email" onChange={this.handleChange} />
                 </div>
                 <div className="field-wrap">
-                  <label>
-                    {" "}
-                    Set A Password<span className="req">*</span>{" "}
-                  </label>
-                  <input type="password" name="password" required ref="password" onChange={this.handleChange} />
+                <input type="password" name="password" placeholder="password" required ref="password" onChange={this.handleChange} />
                 </div>
                 <p className="forgot">
                   <Link to="/">Forgot Password?</Link>
@@ -125,28 +90,7 @@ class Login extends Component {
                 {/* <a className="button button-block" href="index.html">Log In</a> */}
               </form>
             </div>
-            <div id="login">
-              <h3>Welcome Back!</h3>
-              <form action="index.html" method="post">
-                <div className="field-wrap">
-                  <label>
-                    {" "}
-                    Email Address<span className="req">*</span>{" "}
-                  </label>
-                  <input type="email" required />
-                </div>
-                <div className="field-wrap">
-                  <label>
-                    {" "}
-                    Password<span className="req">*</span>{" "}
-                  </label>
-                  <input type="password" required />
-                </div>
-                <p className="forgot" />
-                <a className="button button-block" href="index.html">
-                  Log In
-                </a>
-              </form>
+            <div>
             </div>
           </div>
         </div>
