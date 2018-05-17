@@ -65,18 +65,10 @@ exports[`Register Component renders without crashing 1`] = `
             <div
               className="field-wrap"
             >
-              <label>
-                 
-                First Name
-                <span
-                  className="req"
-                >
-                  *
-                </span>
-              </label>
               <input
                 name="first_name"
                 onChange={[Function]}
+                placeholder="First Name"
                 required={true}
                 type="text"
               />
@@ -84,18 +76,10 @@ exports[`Register Component renders without crashing 1`] = `
             <div
               className="field-wrap"
             >
-              <label>
-                 
-                Last Name
-                <span
-                  className="req"
-                >
-                  *
-                </span>
-              </label>
               <input
                 name="last_name"
                 onChange={[Function]}
+                placeholder="Last Name"
                 required={true}
                 type="text"
               />
@@ -104,19 +88,10 @@ exports[`Register Component renders without crashing 1`] = `
           <div
             className="field-wrap"
           >
-            <label>
-               
-              Email Address
-              <span
-                className="req"
-              >
-                *
-              </span>
-               
-            </label>
             <input
               name="email"
               onChange={[Function]}
+              placeholder="Email"
               required={true}
               type="email"
             />
@@ -124,19 +99,21 @@ exports[`Register Component renders without crashing 1`] = `
           <div
             className="field-wrap"
           >
-            <label>
-               
-              Set A Password
-              <span
-                className="req"
-              >
-                *
-              </span>
-               
-            </label>
             <input
               name="password"
               onChange={[Function]}
+              placeholder="password"
+              required={true}
+              type="password"
+            />
+          </div>
+          <div
+            className="field-wrap"
+          >
+            <input
+              name="password"
+              onChange={[Function]}
+              placeholder="confirm password"
               required={true}
               type="password"
             />
@@ -150,56 +127,7 @@ exports[`Register Component renders without crashing 1`] = `
           </button>
         </form>
       </div>
-      <div
-        id="login"
-      >
-        <h3>
-          Welcome Back!
-        </h3>
-        <form
-          action="index.html"
-          method="post"
-        >
-          <div
-            className="field-wrap"
-          >
-            <label>
-               
-              Email Address
-              <span
-                className="req"
-              >
-                *
-              </span>
-               
-            </label>
-            <input
-              required={true}
-              type="email"
-            />
-             
-          </div>
-          <div
-            className="field-wrap"
-          >
-            <label>
-               
-              Password
-              <span
-                className="req"
-              >
-                *
-              </span>
-               
-            </label>
-            <input
-              required={true}
-              type="password"
-            />
-             
-          </div>
-        </form>
-      </div>
+      <div />
     </div>
   </div>
 </div>
