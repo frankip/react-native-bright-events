@@ -2,6 +2,20 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Navigation extends Component {
+  constructor(props){
+    super()
+      this.state = {
+        isLogged: false,
+        token: localStorage.getItem("access_token")
+      }
+  }
+
+  handleLogout = () => {
+    console.log('logged');
+    console.log(this.state.token);
+      
+
+  }
   render() {
     return (
       <div>
@@ -24,7 +38,7 @@ class Navigation extends Component {
             </ul>
             <ul className="right">
               <li>
-                <Link to="/login" className="fa fa-user"> logout</Link>
+                <Link to="/" className="fa fa-user" onClick={this.handleLogout}> logout</Link>
                 {/* <a href="sign-in.html"><i className="fa fa-user"></i> Logout</a> */}
               </li>
             </ul>

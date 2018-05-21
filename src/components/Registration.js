@@ -11,6 +11,7 @@ class Registration extends Component {
       last_name: '',
       email: '',
       password: '',
+      isLoged : false
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
@@ -26,6 +27,7 @@ class Registration extends Component {
     axios.post(ROOT + "/auth/register/", payload)
     .then((response) => {
     toastr.success(response.data.message);
+    this.setState({isLoged: true})
       this.props.history.push("/login");
     })
     .catch(function (error) {
