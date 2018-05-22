@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import tokenProvider from "axios-token-interceptor";
+
+import toastr from "toastr";
+
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import FloatingActionButton from "material-ui/FloatingActionButton";
@@ -10,6 +14,8 @@ import TextField from "material-ui/TextField";
 import EventCard from './EventCard';
 import Navigation from './Navigation';
 
+const ROOT = "http://127.0.0.1:5000/api";
+const instance = axios.create({});
 
 class Main extends Component {
   constructor() {
@@ -23,7 +29,6 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    const ROOT = 'http://127.0.0.1:5000/api';
     axios.get(`${ROOT}/events/`)
       .then(response => {
         // toastr.success(response.data.message);
@@ -41,7 +46,32 @@ class Main extends Component {
 
   handleSubmit = () => {
     this.setState({ open: false });
-    console.log(this.state);
+
+    let token = localStorage.getItem("access_token");
+    let payload = {
+      event : this.state.event,
+      location : this.state.location,
+      category : this.state.category,
+      description : this.state.description,
+      date: this.state.date 
+    }
+    console.log(payload);
+    
+    instance.interceptors.request.use(tokenProvider({
+      getToken: () => localStorage.getItem("access_token")
+    }));
+
+    instance
+      .post(ROOT + "/events/", payload)
+      .then(response => {
+        toastr.success(response.statusText);
+        
+      })
+      .catch(function(error) {
+        toastr.warning(error.response.data.message);
+        console.log(error.response);
+        
+      });
   };
 
   handleChange = e => {
@@ -50,7 +80,8 @@ class Main extends Component {
   };
 
   setDate(x, date){
-    this.setState({ date: date })
+    this.setState({ date: date.toDateString() });
+    
   }
   render() {
     const action = [
@@ -100,8 +131,9 @@ class Main extends Component {
             onRequestClose={this.toggleOpenState}
             autoScrollBodyContent={true}
           >
-            <TextField floatingLabelText="Event Name" floatingLabelFixed={true} name="event_name" onChange={this.handleChange}  /> <br /> <br />\
-            <TextField floatingLabelText="Description" name="event_description" onChange={this.handleChange} /> <br /><br />
+            <TextField floatingLabelText="Event Name" floatingLabelFixed={true} name="event" onChange={this.handleChange}  /> <br /> <br />
+            <TextField floatingLabelText="Description" name="description" onChange={this.handleChange} /> <br /><br />
+            <TextField floatingLabelText="category" name="category" onChange={this.handleChange} /> <br /><br />
             <TextField floatingLabelText="Event Location" floatingLabelFixed={true} name="location" onChange={this.handleChange}/> <br /><br />
             <DatePicker hintText="Event date" name="date" onChange={(x, date) => this.setDate(x, date) }/><br />
           </Dialog>
