@@ -6,11 +6,9 @@ import Registration from '../components/Registration';
 
 describe('Register Component', () => {
   const wrapper = shallow(<Registration />);
-  const wrapper_instance = wrapper.instance()
 
-  console.log('fgh', wrapper.props);
   it('renders without crashing', () => {
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    expect(shallowToJson(<Registration />)).toMatchSnapshot();
   });
   it('renders state initially', () => {
     expect(wrapper.state().first_name).toEqual('');
@@ -22,14 +20,8 @@ describe('Register Component', () => {
     expect(wrapper.find('input').length).toEqual(5);
   });
   it('return an error if input is empty', () => {
-    const payload = {
-
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-
-    };
-    console.log("instance", wrapper_instance.handleOnSubmit);
+    wrapper.instance().handleOnSubmit();
+    wrapper.instance().state.first_name = 'loice';
+    wrapper.instance().handleOnSubmit();
   });
 });
