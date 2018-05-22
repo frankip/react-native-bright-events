@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import toastr from "toastr";
 import tokenProvider from "axios-token-interceptor";
-import AddEventsForms from './AddEventForm';
 import Navigation from './Navigation';
 
 

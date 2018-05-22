@@ -17,6 +17,8 @@ class Main extends Component {
     this.state = {
       eventList: [],
       isLoggedIn: false,
+      open: false,
+      
     };
   }
 
@@ -33,28 +35,29 @@ class Main extends Component {
       });
   }
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+  toggleOpenState = () => {
+    this.setState({open: !this.state.open});
+  }
 
   handleSubmit = () => {
-    console.log("submit button");
-    console.log(this.firstname);
-    
     this.setState({ open: false });
-    
+    console.log(this.state);
   };
 
+  handleChange = e => {
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
+    // console.log(this.state)
+  };
+
+  setDate(x, date){
+    this.setState({ date: date })
+  }
   render() {
     const action = [
       <FlatButton
         label="close"
         primary={true}
-        onClick={this.handleClose}
+        onClick={this.toggleOpenState}
       />,
       <FlatButton
         label="Submit"
@@ -87,20 +90,20 @@ class Main extends Component {
             {eventlist}
           </div>
         
-        <FloatingActionButton iconClassName="add" label="add event" onClick={this.handleOpen} />
+        <FloatingActionButton iconClassName="add" label="add event" onClick={this.toggleOpenState} />
 
           <Dialog 
-          title="Create a New Event" 
+            title="Create a New Event" 
             actions={action} 
             modal={true}
             open={this.state.open} 
-            onRequestClose={this.handleClose}
+            onRequestClose={this.toggleOpenState}
             autoScrollBodyContent={true}
           >
-            <TextField floatingLabelText="Event Name" floatingLabelFixed={true} ref="first_name"  /> <br /> <br />\
-            <TextField floatingLabelText="Description" /> <br /><br />
-            <TextField floatingLabelText="Event Location" floatingLabelFixed={true} /> <br /><br />
-            <DatePicker hintText="Event date" /><br />
+            <TextField floatingLabelText="Event Name" floatingLabelFixed={true} name="event_name" onChange={this.handleChange}  /> <br /> <br />\
+            <TextField floatingLabelText="Description" name="event_description" onChange={this.handleChange} /> <br /><br />
+            <TextField floatingLabelText="Event Location" floatingLabelFixed={true} name="location" onChange={this.handleChange}/> <br /><br />
+            <DatePicker hintText="Event date" name="date" onChange={(x, date) => this.setDate(x, date) }/><br />
           </Dialog>
         </section>
       </div>
