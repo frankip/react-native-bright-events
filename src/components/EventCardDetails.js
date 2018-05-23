@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import toastr from "toastr";
 import tokenProvider from "axios-token-interceptor";
+
+// local imports
 import Navigation from './Navigation';
+import { instance, ROOT } from "./url_config";
 
-
-const ROOT = "http://127.0.0.1:5000/api";
-const instance = axios.create({});
 
 class EventCardDetails extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class EventCardDetails extends Component {
     let event = {};
 
     axios
-      .get(`${ROOT}/events/${  eventId.toString()}`)
+      .get(`${ROOT}/events/${ eventId.toString()}`)
       .then(response => {
         this.setState({ event: response.data });
       })
@@ -45,11 +45,6 @@ class EventCardDetails extends Component {
 
   handleRsvp = () => {
     let eventId = this.props.match.params.id;
-    let token = localStorage.getItem("access_token")
-  
-    instance.interceptors.request.use(tokenProvider({
-        getToken: () => localStorage.getItem("access_token")
-      }));
 
     instance.post(`${ROOT}/events/${eventId.toString()}/rsvp/`)
     .then((response) => {
@@ -64,11 +59,7 @@ class EventCardDetails extends Component {
   }
   handleDelete = () =>{
 
-    let token = localStorage.getItem("access_token");
     let IDEvent = this.state.event.id;
-    instance.interceptors.request.use(tokenProvider({
-      getToken: () => localStorage.getItem("access_token")
-      }));
     instance.delete(`${ROOT}/events/${IDEvent.toString()}`).then((response) => {
           toastr.success(response.data.message);
       setTimeout(function () {
@@ -96,7 +87,6 @@ class EventCardDetails extends Component {
           <div className="column large-8 small-12">
             <h3>Description</h3>
             <p>
-              {" "}
               Odit et sint temporibus facilis omnis molestiae et. Et laborum
               sint dolorem eveniet. Qui quaerat reprehenderit omnis
               provident. Necessitatibus blanditiis esse delectus ipsum. Non

@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import toastr from "toastr";
 
+// local imports 
+import { instance, ROOT } from "./url_config";
+
 class Registration extends Component {
   constructor() {
     super();
@@ -17,7 +20,6 @@ class Registration extends Component {
   }
   handleOnSubmit(e) {
     e.preventDefault();
-    const ROOT = 'http://127.0.0.1:5000/api';
     let payload = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,

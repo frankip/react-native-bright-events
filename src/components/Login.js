@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import browserHistory from 'react-router';
 import axios from "axios";
 import toastr from "toastr";
+
 // local imports
+import { ROOT } from "./url_config";
 
 class Login extends Component {
   constructor(props) {
@@ -11,14 +13,12 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      message: "",
-      status: 400
+      message: ""
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
   handleOnSubmit(e) {
     e.preventDefault();
-    const ROOT = "http://127.0.0.1:5000/api";
     let payload = { 
       email: this.state.email, 
       password: this.state.password 
@@ -44,7 +44,6 @@ class Login extends Component {
  
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state)
   };
 
   render() {
