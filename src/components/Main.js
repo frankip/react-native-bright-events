@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import tokenProvider from "axios-token-interceptor";
-
 import toastr from "toastr";
 
+// material Ui
+import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import FloatingActionButton from "material-ui/FloatingActionButton";
@@ -13,9 +13,8 @@ import TextField from "material-ui/TextField";
 // local imports
 import EventCard from './EventCard';
 import Navigation from './Navigation';
+import { instance, ROOT } from './url_config';
 
-const ROOT = "http://127.0.0.1:5000/api";
-const instance = axios.create({});
 
 class Main extends Component {
   constructor() {
@@ -47,7 +46,6 @@ class Main extends Component {
   handleSubmit = () => {
     this.setState({ open: false });
 
-    let token = localStorage.getItem("access_token");
     let payload = {
       event : this.state.event,
       location : this.state.location,
@@ -55,12 +53,7 @@ class Main extends Component {
       description : this.state.description,
       date: this.state.date 
     }
-    console.log(payload);
     
-    instance.interceptors.request.use(tokenProvider({
-      getToken: () => localStorage.getItem("access_token")
-    }));
-
     instance
       .post(ROOT + "/events/", payload)
       .then(response => {
@@ -69,20 +62,32 @@ class Main extends Component {
       })
       .catch(function(error) {
         toastr.warning(error.response.data.message);
-        console.log(error.response);
         
       });
   };
 
   handleChange = e => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
-    // console.log(this.state)
   };
 
   setDate(x, date){
     this.setState({ date: date.toDateString() });
     
   }
+  handleSearch = (text) => {
+
+    const eventlist = this.state.eventlist;
+    let searchRes = []
+
+    // if(text){
+    // for(let event : eventlist){
+    //   if(text in event.event || text in event.location || text in event.description){
+    //     searchRes.append(event);
+    //   }
+    // }
+    this.setState({eventlist: searchRes});
+  }
+  
   render() {
     const action = [
       <FlatButton
