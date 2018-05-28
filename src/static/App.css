@@ -428,7 +428,7 @@ textarea {
 .event-container {
     position: relative;
     height: 350px;
-    background-image: url("http://lorempixel.com/1200/500/fashion");
+    background-image: url("https://source.unsplash.com/random");
     background-position: top;
     background-size: cover;
     z-index: 1;

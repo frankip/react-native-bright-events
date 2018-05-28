@@ -10,6 +10,10 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import DatePicker from "material-ui/DatePicker";
 import TextField from "material-ui/TextField";
 
+// foundation
+import { Row, Column } from "react-foundation-components/lib/global/grid";
+
+
 // local imports
 import EventCard from './EventCard';
 import Navigation from './Navigation';
@@ -103,8 +107,8 @@ class Main extends Component {
       />,
     ];
 
-    const eventlist = this.state.eventList.map((event) => {
-      return (
+    const eventlist = this.state.eventList.map((event) => 
+       (
         <EventCard
           key={event.id}
           id={event.id}
@@ -113,8 +117,7 @@ class Main extends Component {
           date={event.date}
           category={event.category}
         />
-      );
-    },
+      )
     );
 
 
@@ -122,29 +125,31 @@ class Main extends Component {
     <div>
         <Navigation />
         <section className="row">
-          <div id="eventCard" className="row small-up-1 medium-up-2 large-up-3">
-            {eventlist}
-          </div>
-        
-        <FloatingActionButton iconClassName="add" label="add event" onClick={this.toggleOpenState} />
-
+          <FloatingActionButton iconClassName="add" label="add event" onClick={this.toggleOpenState} />
+          <Row id="eventCard" largeUp={3} mediumUp={2} smallUp={1}>
+              {eventlist}
+        </Row>
           <Dialog 
-            title="Create a New Event" 
-            actions={action} 
-            modal={true}
-            open={this.state.open} 
-            onRequestClose={this.toggleOpenState}
-            autoScrollBodyContent={true}
+          title="Create a New Event" 
+          actions={action} 
+          modal={true} 
+          open={this.state.open} 
+          onRequestClose={this.toggleOpenState} 
+          autoScrollBodyContent={true}
           >
-            <TextField floatingLabelText="Event Name" floatingLabelFixed={true} name="event" onChange={this.handleChange}  /> <br /> <br />
-            <TextField floatingLabelText="Description" name="description" onChange={this.handleChange} /> <br /><br />
-            <TextField floatingLabelText="category" name="category" onChange={this.handleChange} /> <br /><br />
-            <TextField floatingLabelText="Event Location" floatingLabelFixed={true} name="location" onChange={this.handleChange}/> <br /><br />
-            <DatePicker hintText="Event date" name="date" onChange={(x, date) => this.setDate(x, date) }/><br />
+          
+            <TextField floatingLabelText="Event Name" floatingLabelFixed={true} name="event" onChange={this.handleChange} /> <br /> <br />
+            <TextField floatingLabelText="Description" name="description" onChange={this.handleChange} /> <br />
+            <br />
+            <TextField floatingLabelText="category" name="category" onChange={this.handleChange} /> <br />
+            <br />
+            <TextField floatingLabelText="Event Location" floatingLabelFixed={true} name="location" onChange={this.handleChange} /> <br />
+            <br />
+            <DatePicker hintText="Event date" name="date" onChange={(x, date) => this.setDate(x, date)} />
+            <br />
           </Dialog>
         </section>
-      </div>
-    );
+      </div>);
   }
 }
 
