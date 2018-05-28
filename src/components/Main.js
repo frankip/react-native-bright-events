@@ -19,6 +19,13 @@ import EventCard from './EventCard';
 import Navigation from './Navigation';
 import { instance, ROOT } from './url_config';
 
+const styles = {
+  formstyle : {
+    margin: 2,
+    padding: 4,
+  }
+}
+
 
 class Main extends Component {
   constructor() {
@@ -137,16 +144,49 @@ class Main extends Component {
           onRequestClose={this.toggleOpenState} 
           autoScrollBodyContent={true}
           >
-          
-            <TextField floatingLabelText="Event Name" floatingLabelFixed={true} name="event" onChange={this.handleChange} /> <br /> <br />
-            <TextField floatingLabelText="Description" name="description" onChange={this.handleChange} /> <br />
+          <Row>
+              <Row>
+              <Column large={6}>
+                  <TextField 
+                  floatingLabelText="Event Name" 
+                  floatingLabelFixed={true} 
+                  fullWidth={true} 
+                  name="event" 
+                  onChange={this.handleChange}
+                  inputStyle={styles.formstyle}
+                  /> 
+            </Column>
+              <Column large={6}>
+                  <TextField 
+                  floatingLabelText="category" 
+                  floatingLabelFixed={true} 
+                  name="category" 
+                  fullWidth={true} 
+                  inputStyle={styles.formstyle} 
+                  onChange={this.handleChange} /> <br />
+            </Column>
+             </Row>
+            <Row>
+              <Column large={6}>
+                  <TextField floatingLabelText="Event Location" floatingLabelFixed={true} name="location" fullWidth={true} inputStyle={styles.formstyle} onChange={this.handleChange} />
+            </Column>
+            <Column large={6}>
+            <DatePicker hintText="Event date" name="date" fullWidth={true} inputStyle={styles.formstyle} onChange={(x, date) => this.setDate(x, date)} />
+            </Column>
+             </Row>
+            <Row>
+                <Column small={12} medium={12} large={12}> 
+                  <TextField 
+                  floatingLabelText="Description" 
+                  name="description" 
+                  multiLine={true}
+                  fullWidth={true}
+                  rows={4} 
+                  onChange={this.handleChange} /> <br />
+            </Column>
+            </Row>
             <br />
-            <TextField floatingLabelText="category" name="category" onChange={this.handleChange} /> <br />
-            <br />
-            <TextField floatingLabelText="Event Location" floatingLabelFixed={true} name="location" onChange={this.handleChange} /> <br />
-            <br />
-            <DatePicker hintText="Event date" name="date" onChange={(x, date) => this.setDate(x, date)} />
-            <br />
+          </Row>
           </Dialog>
         </section>
       </div>);
