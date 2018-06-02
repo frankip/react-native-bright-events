@@ -47,7 +47,6 @@ class Login extends Component {
   };
 
   render() {
-     console.log(" main inside render ", this.state);
     return <div className="body">
         <div className="intro">
           <div>

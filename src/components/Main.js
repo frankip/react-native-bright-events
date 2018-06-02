@@ -3,7 +3,6 @@ import axios from 'axios';
 import toastr from "toastr";
 
 // material Ui
-import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import FloatingActionButton from "material-ui/FloatingActionButton";
@@ -12,6 +11,8 @@ import TextField from "material-ui/TextField";
 
 // foundation
 import { Row, Column } from "react-foundation-components/lib/global/grid";
+import { Button } from "react-foundation-components/lib/global/button";
+
 
 
 // local imports
@@ -34,20 +35,30 @@ class Main extends Component {
       eventList: [],
       isLoggedIn: false,
       open: false,
+      pageNum:2,
+      limit:3
       
-    };
+    };    
   }
-
-  componentDidMount() {
-    axios.get(`${ROOT}/events/`)
+  
+  fetchEvents(page){
+    axios
+      .get(`${ROOT}/events/?limit=6&page=1`)
       .then(response => {
-        // toastr.success(response.data.message);
-        this.setState({ ...this.state, eventList: response.data }, () => {
-        });
+        this.setState(
+          { ...this.state, eventList: response.data },
+          () => { }
+        );
       })
       .catch(function (error) {
         console.log(error);
       });
+
+  }
+  componentDidMount() {
+    let page = this.state.pageNum
+    
+    this.fetchEvents(page)
   }
 
   toggleOpenState = () => {
@@ -64,6 +75,8 @@ class Main extends Component {
       description : this.state.description,
       date: this.state.date 
     }
+    console.log(payload);
+    
     
     instance
       .post(ROOT + "/events/", payload)
@@ -83,7 +96,6 @@ class Main extends Component {
 
   setDate(x, date){
     this.setState({ date: date.toDateString() });
-    
   }
   handleSearch = (text) => {
 
@@ -98,6 +110,22 @@ class Main extends Component {
     // }
     this.setState({eventlist: searchRes});
   }
+  
+  handleNext = () => {
+    let currentPageNum = this.state.pageNum;
+    // console.log(currentPageNum);
+    this.setState({ pageNum : currentPageNum+1})
+    console.log('next',this.state.pageNum);
+    
+
+  }
+
+  handlePrev = () => {
+    let previousPageNum = this.state.pageNum;
+    this.setState({ pageNum:previousPageNum-1 })
+    console.log('Prev', this.state.pageNum);
+  }
+
   
   render() {
     const action = [
@@ -188,6 +216,10 @@ class Main extends Component {
             <br />
           </Row>
           </Dialog>
+          <div>
+            <button className='button' onClick={this.handlePrev}>prev</button><br/>
+            <button className='button' onClick={this.handleNext}>next</button>
+          </div>
         </section>
       </div>);
   }
