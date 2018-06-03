@@ -3,16 +3,13 @@ import axios from 'axios';
 import toastr from "toastr";
 
 // material Ui
-import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from "material-ui/Dialog";
-import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import DatePicker from "material-ui/DatePicker";
-import TextField from "material-ui/TextField";
 
 // foundation
 import { Row, Column } from "react-foundation-components/lib/global/grid";
-
 
 // local imports
 import EventCard from './EventCard';
@@ -34,14 +31,14 @@ class Main extends Component {
       eventList: [],
       isLoggedIn: false,
       open: false,
-      
+      payload: {}
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     axios.get(`${ROOT}/events/`)
       .then(response => {
-        // toastr.success(response.data.message);
         this.setState({ ...this.state, eventList: response.data }, () => {
         });
       })
@@ -50,41 +47,44 @@ class Main extends Component {
       });
   }
 
+  // toggle for openning and clossing the dialog
   toggleOpenState = () => {
     this.setState({open: !this.state.open});
   }
 
-  handleSubmit = () => {
+  // takes care of submiting and creating a new event
+  handleSubmit(e) {
+    e.preventDefault();
     this.setState({ open: false });
 
-    let payload = {
-      event : this.state.event,
-      location : this.state.location,
-      category : this.state.category,
-      description : this.state.description,
-      date: this.state.date 
-    }
+    let payload = this.state.payload
+    payload['date'] = this.state.date;
     
+    // axios instance for posting to the api endpoint events
     instance
       .post(ROOT + "/events/", payload)
       .then(response => {
         toastr.success(response.statusText);
-        
       })
       .catch(function(error) {
         toastr.warning(error.response.data.message);
-        
       });
+    this.setState({payload:{}});
   };
 
+  // Receives the data from the input and update the state
   handleChange = e => {
-    this.setState({ ...this.state, [e.target.name]: e.target.value });
+    const { payload } = this.state;
+    payload[e.target.name] = e.target.value;
+    this.setState({ ...this.state, payload});
   };
 
+  // receives the date from datepicker and updates the state
   setDate(x, date){
     this.setState({ date: date.toDateString() });
-    
   }
+
+  // searches through the events 
   handleSearch = (text) => {
 
     const eventlist = this.state.eventlist;
@@ -100,20 +100,26 @@ class Main extends Component {
   }
   
   render() {
+    // actions on the dialog modal
     const action = [
-      <FlatButton
+      <RaisedButton
+        key={1}
         label="close"
-        primary={true}
+        secondary={true}
+        style={{ float: 'left' }}
         onClick={this.toggleOpenState}
       />,
-      <FlatButton
+      <RaisedButton
+        key={2}
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onClick={this.handleSubmit}
+        type="submit"
+        onSubmit={this.handleSubmit}
       />,
     ];
 
+    // loop through the events and pass them to the event card component
     const eventlist = this.state.eventList.map((event) => 
        (
         <EventCard
@@ -137,55 +143,44 @@ class Main extends Component {
               {eventlist}
         </Row>
           <Dialog 
-          title="Create a New Event" 
-          actions={action} 
-          modal={true} 
+          title="Create a New Event"
+          modal={false} 
           open={this.state.open} 
           onRequestClose={this.toggleOpenState} 
           autoScrollBodyContent={true}
           >
           <Row>
+              <form method="POST" onSubmit={this.handleSubmit}>
               <Row>
               <Column large={6}>
-                  <TextField 
-                  floatingLabelText="Event Name" 
-                  floatingLabelFixed={true} 
-                  fullWidth={true} 
-                  name="event" 
-                  onChange={this.handleChange}
-                  inputStyle={styles.formstyle}
-                  /> 
+                  <input type="text" name="event" placeholder="Event Name" required onChange={this.handleChange} />
             </Column>
               <Column large={6}>
-                  <TextField 
-                  floatingLabelText="category" 
-                  floatingLabelFixed={true} 
-                  name="category" 
-                  fullWidth={true} 
-                  inputStyle={styles.formstyle} 
-                  onChange={this.handleChange} /> <br />
+                  <input type="text" name="category"  placeholder="category" required onChange={this.handleChange} />
             </Column>
              </Row>
             <Row>
               <Column large={6}>
-                  <TextField floatingLabelText="Event Location" floatingLabelFixed={true} name="location" fullWidth={true} inputStyle={styles.formstyle} onChange={this.handleChange} />
-            </Column>
-            <Column large={6}>
-            <DatePicker hintText="Event date" name="date" fullWidth={true} inputStyle={styles.formstyle} onChange={(x, date) => this.setDate(x, date)} />
+                  <input type="text" name="location" placeholder="Event Location" required onChange={this.handleChange} />
+              </Column>
+              <Column large={6}>
+              <DatePicker 
+                hintText="Event date" 
+                name="date" 
+                fullWidth={true} 
+                inputStyle={styles.formstyle} 
+                onChange={(x, date) => this.setDate(x, date)} />
             </Column>
              </Row>
             <Row>
                 <Column small={12} medium={12} large={12}> 
-                  <TextField 
-                  floatingLabelText="Description" 
-                  name="description" 
-                  multiLine={true}
-                  fullWidth={true}
-                  rows={4} 
-                  onChange={this.handleChange} /> <br />
+                    <textarea name="description" type="text" placeholder="Event description" cols="30" rows="5" onChange={this.handleChange}></textarea>
             </Column>
             </Row>
-            <br />
+                <div value="submit" style={{ textAlign: 'right', padding: 8, margin: '24px -24px -24px -24px' }}>
+                  {action}
+                </div>
+              </form>
           </Row>
           </Dialog>
         </section>
