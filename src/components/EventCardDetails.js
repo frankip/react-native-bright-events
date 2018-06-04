@@ -54,7 +54,10 @@ class EventCardDetails extends Component {
   }
   // onchange handler for date picker
   setDate(x, date) {
-    this.setState({ date: date.toDateString() });
+    let event = this.state.event;
+    event["date"] = date.toDateString();
+    this.setState({ ...this.state, event });
+    // this.setState({ date: date.toDateString() });
   }
 
   componentWillMount() {
