@@ -13,6 +13,7 @@ import { Row, Column } from "react-foundation-components/lib/global/grid";
 // local imports
 import Navigation from './Navigation';
 import { instance, ROOT } from "./url_config";
+import { isTokenExpired } from "./url_config";
 
 const styles = {
   formstyle: {
@@ -26,8 +27,9 @@ class EventCardDetails extends Component {
     super(props);
     this.state = {
       event: {},
-      token: '',
-      open: false
+      token: localStorage.getItem("access_token"),
+      open: false,
+
     };
   }
   // toggle opening and closing dialog
@@ -158,6 +160,7 @@ class EventCardDetails extends Component {
               perspiciatis.{" "}
             </p>
           </div>
+          {this.state.token && !isTokenExpired(this.state.token) ?
           <div className="column large-3 small-12">
             <button className="button expanded" onClick={this.handleRsvp}>
               RSVP
@@ -177,6 +180,8 @@ class EventCardDetails extends Component {
               </div>
             </div>
           </div>
+          :null
+          }
           <Dialog
             title="Create a New Event"
             actions={action}

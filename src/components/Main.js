@@ -15,6 +15,7 @@ import { Row, Column } from "react-foundation-components/lib/global/grid";
 import EventCard from './EventCard';
 import Navigation from './Navigation';
 import { instance, ROOT } from './url_config';
+import { isTokenExpired } from "./url_config";
 
 const styles = {
   formstyle : {
@@ -31,7 +32,8 @@ class Main extends Component {
       eventList: [],
       isLoggedIn: false,
       open: false,
-      payload: {}
+      payload: {},
+      token: localStorage.getItem("access_token"),
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -138,7 +140,10 @@ class Main extends Component {
     <div>
         <Navigation />
         <section className="row">
+          {this.state.token && !isTokenExpired(this.state.token) ?
           <FloatingActionButton iconClassName="add" label="add event" onClick={this.toggleOpenState} />
+          :null
+          }
           <Row id="eventCard" largeUp={3} mediumUp={2} smallUp={1}>
               {eventlist}
         </Row>
