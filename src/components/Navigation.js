@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+// local imports
+import { isTokenExpired } from './url_config';
+import Login from './Login';
+
 class Navigation extends Component {
   constructor(props){
     super()
       this.state = {
         isLogged: false,
-        token: localStorage.getItem("access_token")
+        token: localStorage.getItem("access_token"),
+        user: localStorage.getItem('user')
       }
   }
 
+  // resets the local storage to null
   handleLogout = () => {
-    console.log('logged');
-    console.log(this.state.token);
-      
+    localStorage.clear();
 
   }
   render() {
@@ -25,22 +29,32 @@ class Navigation extends Component {
             <ul className="left">
               <li>
                 <Link to="/" className="fa fa-home">Home</Link>
-                {/* <a href="index.html"><i className="fa fa-home"></i> Home</a> */}
               </li>
               <li>
                 <Link to="/" className="fa fa-book">Categories</Link>
-                {/* <a href="#"><i className="fa fa-book"></i> Categories</a> */}
               </li>
               <li>
                 <Link to="/" className="fa fa-fire" >Most Popular</Link>
-                {/* <a href="#"><i className="fa fa-fire"></i> Most Popular</a> */}
               </li>
             </ul>
             <ul className="right">
-              <li>
-                <Link to="/" className="fa fa-user" onClick={this.handleLogout}> logout</Link>
-                {/* <a href="sign-in.html"><i className="fa fa-user"></i> Logout</a> */}
-              </li>
+            { this.state.token && !isTokenExpired(this.state.token)?
+                <span>
+                  <li>
+                    <Link to="/" className="fa fa-user"> {this.state.user}</Link>
+                  </li>
+                  <li>
+                    <Link to="/login" onClick={this.handleLogout}> 
+                      logout <i className="fa fa-sign-out" />
+                    </Link>
+                  </li>
+                </span>
+                :
+                <li>
+                  <Link to="/login" className="fa fa-sign-in"> Login</Link>
+                </li> 
+            }
+              
             </ul>
           </div>
         </nav>

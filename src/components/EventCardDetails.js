@@ -86,7 +86,6 @@ class EventCardDetails extends Component {
   handleEdit = () => {
     let eventId = this.props.match.params.id;
     let payload = this.state.event;
-    payload["date"] = this.state.date;
 
     instance
       .put(`${ROOT}/events/${eventId.toString()}/`, payload)
