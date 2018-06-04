@@ -30,12 +30,16 @@ class Navigation extends Component {
               <li>
                 <Link to="/" className="fa fa-home">Home</Link>
               </li>
+              {this.state.token && !isTokenExpired(this.state.token)?
+              <span>
               <li>
                 <Link to="/" className="fa fa-book">Categories</Link>
               </li>
               <li>
                 <Link to="/" className="fa fa-fire" >Most Popular</Link>
               </li>
+              </span>:null
+              }
             </ul>
             <ul className="right">
             { this.state.token && !isTokenExpired(this.state.token)?
