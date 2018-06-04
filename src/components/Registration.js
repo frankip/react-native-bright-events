@@ -4,7 +4,7 @@ import axios from "axios";
 import toastr from "toastr";
 
 // local imports 
-import { instance, ROOT } from "./url_config";
+import { ROOT } from "./url_config";
 
 class Registration extends Component {
   constructor() {

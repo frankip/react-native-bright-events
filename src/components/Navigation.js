@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 // local imports
 import { isTokenExpired } from './url_config';
-import Login from './Login';
 
 class Navigation extends Component {
   constructor(props){
@@ -24,7 +23,7 @@ class Navigation extends Component {
     return (
       <div>
         <nav className="nav">
-          <a className="toggle-nav" href="#">&#9776;</a>
+          <button className="toggle-nav" href="#">&#9776;</button>
           <div className="nav-mobile">
             <ul className="left">
               <li>

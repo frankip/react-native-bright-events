@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import browserHistory from 'react-router';
 import axios from "axios";
 import toastr from "toastr";
 
 // local imports
 import { ROOT } from "./url_config";
-import { MyContext } from '../App';
 
 class Login extends Component {
   constructor(props) {

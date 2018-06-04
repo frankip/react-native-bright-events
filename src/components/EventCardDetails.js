@@ -168,14 +168,14 @@ class EventCardDetails extends Component {
             <div className="row interactions">
               <div className="right">
                 <li>
-                  <a href="#" onClick={this.toggleOpenState}>
-                    <i className="fa fa-pencil" />{" "}
-                  </a>
+                  <button href="#" onClick={this.toggleOpenState}>
+                    <i className="fa fa-pencil fa-5x" />{" "}
+                  </button>
                 </li>
                 <li>
-                  <a href="#" onClick={this.handleDelete}>
-                    <i className="fa fa-trash-o" />
-                  </a>
+                  <button href="#" onClick={this.handleDelete}>
+                    <i className="fa fa-trash-o fa-5x" />
+                  </button>
                 </li>
               </div>
             </div>
