@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import toastr from "toastr";
-import tokenProvider from "axios-token-interceptor";
 
 import Dialog from "material-ui/Dialog";
-import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
 import DatePicker from "material-ui/DatePicker";
 import TextField from "material-ui/TextField";
 
@@ -31,13 +30,14 @@ class EventCardDetails extends Component {
       open: false
     };
   }
-
+  // toggle opening and closing dialog
   toggleOpenState = () => {
     this.setState({
       open: !this.state.open
     });
   };
 
+  // fetch event details if there are no props
   getEventFromId() {
     const eventId = this.props.match.params.id;
     let event = {};
@@ -52,12 +52,12 @@ class EventCardDetails extends Component {
       });
     return event;
   }
+  // onchange handler for date picker
   setDate(x, date) {
     this.setState({ date: date.toDateString() });
   }
 
   componentWillMount() {
-    let eventDetails;
     if (this.props.location.state) {
       this.setState({ event: this.props.location.state.event });
     } else {
@@ -65,6 +65,7 @@ class EventCardDetails extends Component {
     }
   }
 
+  // Make rsvp reservation
   handleRsvp = () => {
     let eventId = this.props.match.params.id;
 
@@ -78,46 +79,61 @@ class EventCardDetails extends Component {
       });
   };
 
+  // Edit and post event
   handleEdit = () => {
-    console.log("edit it");
-    console.log(this.state);
-    
+    let eventId = this.props.match.params.id;
+    let payload = this.state.event;
+    payload["date"] = this.state.date;
+
+    instance
+      .put(`${ROOT}/events/${eventId.toString()}/`, payload)
+      .then(response => {
+        toastr.success(response.data.message);
+      })
+      .catch(function (error) {
+        toastr.warning(error.response.data.message);
+      });
   };
+
+  // delete event
   handleDelete = () => {
     let IDEvent = this.state.event.id;
     instance
       .delete(`${ROOT}/events/${IDEvent.toString()}`)
       .then(response => {
         toastr.success(response.data.message);
-        setTimeout(function() {
-          window.location.assign("/");
-        }, 2000);
-        console.log("hgv", response);
+        this.props.history.push("/");
       })
       .catch(function(error) {
         toastr.warning(error.response.data.message);
         console.log(error.response.data.message);
       });
   };
+
+  // get data from input and update state 
   handleChange = e => {
-    this.setState({ ...this.state, [e.target.name]: e.target.value });
+    const event = this.state.event
+    event[e.target.name] = e.target.value
+    this.setState({ ...this.state, event });
     
   };
 
   render() {
+    // action buttons for material UI dialog
     const action = [
-      <FlatButton
+      <RaisedButton
         label="close"
         primary={true}
         onClick={this.toggleOpenState}
       />,
-      <FlatButton
+      <RaisedButton
         label="Submit"
         primary={true}
         keyboardFocused={true}
         onClick={this.handleEdit}
       />
     ];
+
     return (
       <div>
         <Navigation />
