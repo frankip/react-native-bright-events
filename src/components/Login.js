@@ -39,6 +39,7 @@ class Login extends Component {
         );
         toastr.success(response.data.message);
         localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("user", response.data.user);
         this.props.history.push("/");
       })
       .catch(error => {
@@ -53,19 +54,9 @@ class Login extends Component {
 
   render() {
     return (
-      
-      <div>
-        <MyContext.Consumer>
-          {context => (
             <div className="body">
               <div className="intro">
                 <div>
-                  {
-                    console.log('returned',this.state)
-                  }
-                  {
-                    context.updateState
-                  }
                   <h1>
                     Welcome to<br />
                     <span>Bright Events</span>
@@ -108,9 +99,6 @@ class Login extends Component {
                 </div>
               </div>
             </div>
-                )}
-        </MyContext.Consumer>
-      </div>
       
     );
   }
