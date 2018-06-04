@@ -6,6 +6,7 @@ import toastr from "toastr";
 
 // local imports
 import { ROOT } from "./url_config";
+import { MyContext } from '../App';
 
 class Login extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      message: ""
+      loggedIn: false,
+      access_token: ''
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
@@ -28,9 +30,12 @@ class Login extends Component {
       .post(ROOT + "/auth/login/", payload)
       .then((response) => {
         this.setState(
-          { status: response.status, 'message': response.data.message },
-          () => {
-          }
+          {
+            status: response.status,
+            loggedIn: true,
+            access_token: response.data.access_token
+          },
+          () => {}
         );
         toastr.success(response.data.message);
         localStorage.setItem("access_token", response.data.access_token);
@@ -47,53 +52,67 @@ class Login extends Component {
   };
 
   render() {
-     console.log(" main inside render ", this.state);
-    return <div className="body">
-        <div className="intro">
-          <div>
-            <h1>
-              Welcome to<br />
-              <span>Bright Events</span>
-            </h1>
-            <p>
-              create and manage different types of events while making them
-              easily accessible to target markets
-            </p>
-          </div>
-        </div>
-        <div className="form">
-          <ul className="tab-group">
-            <li className="tab">
-              <Link to="/signup">Signup</Link>
-            </li>
-            <li className="tab active">
-              <Link to="/login">login</Link>
-            </li>
-          </ul>
-          <div className="tab-content">
-            <div id="login">
-              <h3>Welcome Back!</h3>
-              <form method="POST" onSubmit={this.handleOnSubmit}>
-                <div className="field-wrap">
-                <input type="email" name="email" placeholder="Email" required ref="email" onChange={this.handleChange} />
+    return (
+      
+      <div>
+        <MyContext.Consumer>
+          {context => (
+            <div className="body">
+              <div className="intro">
+                <div>
+                  {
+                    console.log('returned',this.state)
+                  }
+                  {
+                    context.updateState
+                  }
+                  <h1>
+                    Welcome to<br />
+                    <span>Bright Events</span>
+                  </h1>
+                  <p>
+                    create and manage different types of events while making them
+                    easily accessible to target markets
+                  </p>
                 </div>
-                <div className="field-wrap">
-                <input type="password" name="password" placeholder="password" required ref="password" onChange={this.handleChange} />
+              </div>
+              <div className="form">
+                <ul className="tab-group">
+                  <li className="tab">
+                    <Link to="/signup">Signup</Link>
+                  </li>
+                  <li className="tab active">
+                    <Link to="/login">login</Link>
+                  </li>
+                </ul>
+                <div className="tab-content">
+                  <div id="login">
+                    <h3>Welcome Back!</h3>
+                    <form method="POST" onSubmit={this.handleOnSubmit}>
+                      <div className="field-wrap">
+                      <input type="email" name="email" placeholder="Email" required onChange={this.handleChange} />
+                      </div>
+                      <div className="field-wrap">
+                      <input type="password" name="password" placeholder="password" required onChange={this.handleChange} />
+                      </div>
+                      <p className="forgot">
+                        <Link to="/">Forgot Password?</Link>
+                      </p>
+                      <button value="submit" className="button button-block">
+                        Log In
+                      </button>
+                    </form>
+                  </div>
+                  <div>
+                  </div>
                 </div>
-                <p className="forgot">
-                  <Link to="/">Forgot Password?</Link>
-                </p>
-                <button value="submit" className="button button-block">
-                  Log In
-                </button>
-                {/* <a className="button button-block" href="index.html">Log In</a> */}
-              </form>
+              </div>
             </div>
-            <div>
-            </div>
-          </div>
-        </div>
-      </div>;
+                )}
+        </MyContext.Consumer>
+      </div>
+      
+    );
   }
 }
 

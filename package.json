@@ -25,7 +25,9 @@
     "toastr": "^2.1.4",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1",
-    "ws": "3.3.2"
+    "ws": "3.3.2",
+    "nyc": "^11.7.1",
+    "coveralls": "^3.0.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -48,7 +50,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "jest": {
     "collectCoverageFrom": [
