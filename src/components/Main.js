@@ -24,7 +24,7 @@ const styles = {
   }
 }
 
-
+let events = [];
 class Main extends Component {
   constructor() {
     super();
@@ -41,6 +41,7 @@ class Main extends Component {
   componentDidMount() {
     axios.get(`${ROOT}/events/`)
       .then(response => {
+        events = response.data;
         this.setState({ ...this.state, eventList: response.data }, () => {
         });
       })
@@ -87,18 +88,32 @@ class Main extends Component {
   }
 
   // searches through the events 
-  handleSearch = (text) => {
+  handleSearch = e => {
+    let searchStr = "";
+    searchStr = e.target.value.toLowerCase().replace(/\s/g, '');
+    let eventItem;
+    
+    let searchRes = [];
+    
+    if (searchStr !== ""){
+      console.log('after if',searchStr);
 
-    const eventlist = this.state.eventlist;
-    let searchRes = []
+      for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
+        eventItem = events[eventIndex];
+        console.log("looping through items");
 
-    // if(text){
-    // for(let event : eventlist){
-    //   if(text in event.event || text in event.location || text in event.description){
-    //     searchRes.append(event);
-    //   }
-    // }
-    this.setState({eventlist: searchRes});
+        if (eventItem.event
+            .toLowerCase()
+            .includes(
+              searchStr
+            ) || eventItem.location.toLowerCase().includes(searchStr)) {
+          searchRes.push(eventItem);
+        }
+      }
+      
+      this.setState({eventList: searchRes});
+    }
+    else { this.setState({ eventList: events }); }
   }
   
   render() {
@@ -140,9 +155,11 @@ class Main extends Component {
     <div>
         <Navigation />
         <section className="row">
-            <div class="input-group search-box">
-              <span class="input-group-label">search</span>
-              <input class="input-group-field medium-6 cell" type="search" />
+        <div>
+          <div className="input-group search-box">
+            <span className="input-group-label">search</span>
+            <input className="input-group-field medium-6 cell" type="search" name="search" onChange={this.handleSearch} />
+            </div>
             </div>
           {this.state.token && !isTokenExpired(this.state.token) ?
           <FloatingActionButton iconClassName="add" label="add event" onClick={this.toggleOpenState} />
