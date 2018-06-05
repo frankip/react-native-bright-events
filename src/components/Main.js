@@ -140,6 +140,10 @@ class Main extends Component {
     <div>
         <Navigation />
         <section className="row">
+            <div class="input-group search-box">
+              <span class="input-group-label">search</span>
+              <input class="input-group-field medium-6 cell" type="search" />
+            </div>
           {this.state.token && !isTokenExpired(this.state.token) ?
           <FloatingActionButton iconClassName="add" label="add event" onClick={this.toggleOpenState} />
           :null

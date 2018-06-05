@@ -485,3 +485,14 @@ textarea {
     margin: 1em;
     font-size: 2em;
 }
+
+/* search  */
+[type=search] {
+    width: 50%;
+}
+.search-box {
+    width: 60%;
+    margin: 0 auto;
+    margin: 0 32%;
+    padding: 0.3em;
+}
