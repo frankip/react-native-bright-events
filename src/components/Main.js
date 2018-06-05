@@ -38,7 +38,7 @@ class Main extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     axios.get(`${ROOT}/events/`)
       .then(response => {
         events = response.data;
@@ -48,6 +48,7 @@ class Main extends Component {
       .catch(function (error) {
         console.log(error);
       });
+      
   }
 
   // toggle for openning and clossing the dialog

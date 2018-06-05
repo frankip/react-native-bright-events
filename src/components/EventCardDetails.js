@@ -56,7 +56,6 @@ class EventCardDetails extends Component {
     let event = Object.assign({}, this.state.event);
     event["date"] = date.toDateString();
     this.setState({ event });
-    // this.setState({ date: date.toDateString() });
   }
 
   componentWillMount() {
@@ -86,7 +85,7 @@ class EventCardDetails extends Component {
     let eventId = this.props.match.params.id;
     let payload = this.state.event;
     
-
+    this.setState({ open: false });
 
     instance
       .put(`${ROOT}/events/${eventId.toString()}/`, payload)
