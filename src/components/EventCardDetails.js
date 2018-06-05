@@ -26,10 +26,9 @@ class EventCardDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      event: {},
       token: localStorage.getItem("access_token"),
       open: false,
-
+      event: {},
     };
   }
   // toggle opening and closing dialog
@@ -42,8 +41,7 @@ class EventCardDetails extends Component {
   // fetch event details if there are no props
   getEventFromId() {
     const eventId = this.props.match.params.id;
-    let event = {};
-
+    console.log("getting event from api");
     axios
       .get(`${ROOT}/events/${eventId.toString()}`)
       .then(response => {
@@ -52,13 +50,12 @@ class EventCardDetails extends Component {
       .catch(function(error) {
         console.log(error);
       });
-    return event;
   }
   // onchange handler for date picker
   setDate(x, date) {
-    let event = this.state.event;
+    let event = Object.assign({}, this.state.event);
     event["date"] = date.toDateString();
-    this.setState({ ...this.state, event });
+    this.setState({ event });
     // this.setState({ date: date.toDateString() });
   }
 
@@ -88,6 +85,8 @@ class EventCardDetails extends Component {
   handleEdit = () => {
     let eventId = this.props.match.params.id;
     let payload = this.state.event;
+    
+
 
     instance
       .put(`${ROOT}/events/${eventId.toString()}/`, payload)
@@ -115,11 +114,11 @@ class EventCardDetails extends Component {
   };
 
   // get data from input and update state 
-  handleChange = e => {
-    const event = this.state.event
-    event[e.target.name] = e.target.value
-    this.setState({ ...this.state, event });
-    
+  handleChange =  e => {
+    // let event = this.state.event;
+    let event = Object.assign({}, this.state.event, {[e.target.name]: e.target.value});
+    // event[e.target.name] = e.target.value;
+    this.setState({ event });
   };
 
   render() {
@@ -238,7 +237,7 @@ class EventCardDetails extends Component {
                     fullWidth={true}
                     defaultDate={new Date(this.state.event.date)}
                     inputStyle={styles.formstyle}
-                    onChange={(x, date) => this.setDate(x, date)}
+                    onChange={(x, date) => this.setDate(x, date, 'date')}
                   />
                 </Column>
               </Row>
