@@ -1,4 +1,4 @@
-import Enzym from '../setupTests';
+
 import React from 'react';
 
 import expect from "expect";
@@ -20,6 +20,16 @@ describe('Register Component', () => {
   });
   it('renders appropriate number of inputs', () => {
     expect(wrapper.find('input').length).toEqual(5);
+  });
+  it('should have one submit  button', () => {
+    expect(wrapper.find('button').length).toEqual(1);
+  });
+  it('should have a submit prop', () => {
+    expect(wrapper.prop("handleOnSubmit")).toBeDefined();
+    console.log(wrapper.prop);
+  });
+  it('should have one one form element', () => {
+    expect(wrapper.find('form').length).toEqual(1);
   });
   // it('return an error if input is empty', () => {
   //   wrapper.instance().handleOnSubmit();

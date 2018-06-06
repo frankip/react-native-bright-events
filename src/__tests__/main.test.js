@@ -8,8 +8,8 @@ import sinon from 'sinon';
 
 import Main from '../components/Main';
 
-global.window = {};
-window.localStorage = global.localStorage;
+// global.window = {};
+// window.localStorage = global.localStorage;
 
 // Enzyme.configure({ adapter: new Adapter() });
 
@@ -31,14 +31,18 @@ const fakeOnChange = sinon.spy();
 //   };
 //   return mount(
 //     <Main {...props} />,
-//     options.get(),q
+//     options.get(),
 //   );
 // }
 
 describe('Main component', () => {
   const wrapper = shallow(<Main />);
+
   // const preventDefault = jest.fn();
   it('renders without crashing', () => {
     // expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
+  it('renders a modal', () => {
+    expect(wrapper.find('Dialog').length).toEqual(1);
   });
 });
