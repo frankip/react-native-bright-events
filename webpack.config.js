@@ -35,14 +35,17 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: [
+          'babel-loader',
+          'babel?presets[]=stage-0,presets[]=react,presets[]=es2015',
+        ],
       },
       // CSS loader to CSS files -> ADDED IN THIS STEP
       // Files will get handled by css loader and then passed to the extract text plugin
       // which will write it to the file we defined above
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
+        loaders: ExtractTextPlugin.extract({
           use: 'css-loader',
         }),
       },

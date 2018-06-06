@@ -1,5 +1,12 @@
 {
     "presets": [
-        "env", "react"
+        "env", 
+        "react",
+        "react-app",
+        "es2015"
+    ],
+    "plugins": [
+        "transform-es2015-modules-commonjs",
+        "transform-class-properties"
     ]
 }
