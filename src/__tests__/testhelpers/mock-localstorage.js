@@ -3,6 +3,6 @@ import localStorage from 'mock-local-storage';
 
 window.localStorage = global.localStorage;
 
-describe('works', () => {
+test('works', () => {
   expect(true).toBe(true);
 });

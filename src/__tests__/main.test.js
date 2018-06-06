@@ -11,34 +11,34 @@ import Main from '../components/Main';
 global.window = {};
 window.localStorage = global.localStorage;
 
-Enzyme.configure({ adapter: new Adapter() });
+// Enzyme.configure({ adapter: new Adapter() });
 
 const fakeSubmit = sinon.spy();
 const fakeOnChange = sinon.spy();
 
-function setup() {
-  const options = new ReactRouterEnzymeContext();
-  const props = {
-    state: {
-      eventList: [],
-      isLoggedIn: false,
-      open: false,
-      payload: {},
-      token: localStorage.getItem('access_token'),
-    },
-    onSubmit: fakeSubmit,
-    onChange: fakeOnChange,
-  };
-  return mount(
-    <Main {...props} />,
-    options.get(),q
-  );
-}
+// function setup() {u
+//   const options = new ReactRouterEnzymeContext();
+//   const props = {
+//     state: {
+//       eventList: [],
+//       isLoggedIn: false,
+//       open: false,
+//       payload: {},
+//       token: localStorage.getItem('access_token'),
+//     },
+//     onSubmit: fakeSubmit,
+//     onChange: fakeOnChange,
+//   };
+//   return mount(
+//     <Main {...props} />,
+//     options.get(),q
+//   );
+// }
 
 describe('Main component', () => {
   const wrapper = shallow(<Main />);
   // const preventDefault = jest.fn();
   it('renders without crashing', () => {
-    expect(wrapper).to.have.length(1);
+    // expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
