@@ -14,8 +14,7 @@ import { Row, Column } from "react-foundation-components/lib/global/grid";
 // local imports
 import EventCard from './EventCard';
 import Navigation from './Navigation';
-import { instance, ROOT } from './url_config';
-import { isTokenExpired } from "./url_config";
+import { instance, ROOT, isTokenExpired } from "./url_config";
 
 const styles = {
   formstyle : {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+// foundation
+import { Row, Column } from "react-foundation-components/lib/global/grid";
 // local imports
 import { isTokenExpired } from './url_config';
 
@@ -32,7 +34,7 @@ class Navigation extends Component {
               {this.state.token && !isTokenExpired(this.state.token)?
               <span>
               <li>
-                <Link to="/" className="fa fa-book">Categories</Link>
+                <Link to="/myevents" className="fa fa-book">My Events</Link>
               </li>
               <li>
                 <Link to="/" className="fa fa-fire" >Most Popular</Link>
