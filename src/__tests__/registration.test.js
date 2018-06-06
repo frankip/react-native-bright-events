@@ -19,9 +19,9 @@ describe('Register Component', () => {
   it('renders appropriate number of inputs', () => {
     expect(wrapper.find('input').length).toEqual(5);
   });
-  it('return an error if input is empty', () => {
-    wrapper.instance().handleOnSubmit();
-    wrapper.instance().state.first_name = 'loice';
-    wrapper.instance().handleOnSubmit();
-  });
+  // it('return an error if input is empty', () => {
+  //   wrapper.instance().handleOnSubmit();
+  //   wrapper.instance().state.first_name = 'loice';
+  //   wrapper.instance().handleOnSubmit();
+  // });
 });

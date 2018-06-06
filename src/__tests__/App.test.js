@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import App from '../App';
 
 // it('renders without crashing', () => {
@@ -9,6 +8,7 @@ import App from '../App';
 //   ReactDOM.unmountComponentAtNode(div);
 // });
 
-test('works', () => {
-  expect(true).toBe(true)
-})
+describe('works', () => {
+  expect(true).toBe(true);
+});
+

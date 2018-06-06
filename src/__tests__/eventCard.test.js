@@ -1,11 +1,12 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount, shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import expect from 'expect';
+import assert from 'assert';
 import EventCard from '../components/EventCard';
 
-// Enzyme.configure({ adapter: new Adapter() });
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('event card component', () => {
   const wrapper = shallow(<EventCard />);
@@ -15,5 +16,8 @@ describe('event card component', () => {
   });
   it('should render image', () => {
     expect(wrapper.find('img').length).toEqual(1);
+  });
+  it('renders a link to show event details', () => {
+    expect(wrapper.find('Link').length).toEqual(1);
   });
 });
