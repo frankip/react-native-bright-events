@@ -60,9 +60,20 @@ describe('Register Component', () => {
   it('should have one one form element', () => {
     expect(wrapper.find('form').length).toEqual(1);
   });
-  // it('return an error if input is empty', () => {
-  //   wrapper.instance().handleOnSubmit();
-  //   wrapper.instance().state.first_name = 'loice';
-  //   wrapper.instance().handleOnSubmit();
-  // });
+
+  describe('signup form ', () => {
+    it('should call onsubmit when form is submitted', () => {
+      // const form = wrapper.find('[type="submit"]');
+      // console.log(form.debug());
+
+      // form.simulate('submit');
+      // expect(fakeSubmit.calledOnce).toBe(true);
+      const form = wrapper.find('form');
+      form.instance().onSubmit = sinon.spy();
+      form.simulate('submit');
+      // console.log(form.instance().onSubmit);
+
+      expect(fakeSubmit.calledOnce).toBe(false);
+    });
+  });
 });

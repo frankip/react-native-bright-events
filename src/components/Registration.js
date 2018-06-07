@@ -72,7 +72,7 @@ class Registration extends Component {
               <form onSubmit={this.handleOnSubmit}>
                 <div className="top-row">
                   <div className="field-wrap">
-                    <input type="text" name="first_name" placeholder="First Name" required ref="first_name" onChange={this.handleChange} />
+                    <input type="text" name="first_name" id="first_name" placeholder="First Name" required ref="first_name" onChange={this.handleChange} />
                   </div>
                   <div className="field-wrap">
                   <input type="text" name="last_name" placeholder="Last Name" required ref="last_name" onChange={this.handleChange} />
@@ -87,7 +87,6 @@ class Registration extends Component {
                 <div className="field-wrap">
                 <input type="password" name="password" placeholder="confirm password" required ref="password" onChange={this.handleChange} />
                 </div>
-                {/* <a type="submit" value="submit" className="button button-block">Get Started</a>  */}
                 <button type="submit" value="submit" className="button button-block">
                   Get Started
                 </button>
