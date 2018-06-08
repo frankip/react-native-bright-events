@@ -37,9 +37,9 @@ describe('Register Component', () => {
   // const wrapper = shallow(<Registration />);
   const wrapper = setup();
 
-  // it('renders without crashing', () => {
-  //   expect(shallowToJson(<Registration />)).toMatchSnapshot();
-  // });
+  it('renders without crashing', () => {
+    expect(shallowToJson(<Registration />)).toMatchSnapshot();
+  });
   it('renders state initially', () => {
     expect(wrapper.state().first_name).toEqual('');
     expect(wrapper.state().last_name).toEqual('');

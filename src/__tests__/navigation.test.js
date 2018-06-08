@@ -9,6 +9,9 @@ import Navigation from '../components/Navigation';
 const wrapper = shallow(<Navigation />);
 
 describe('Navigation Component', () => {
+  it("Renders properly ", () => {
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
   it('has navigation elememt', () => {
     expect(wrapper.find('nav').length).toEqual(1);
   });

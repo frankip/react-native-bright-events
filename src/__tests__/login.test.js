@@ -1,5 +1,5 @@
 
-import "jsdom-global/register";
+import 'jsdom-global/register';
 import React from 'react';
 import { shallowToJson } from 'enzyme-to-json';
 import Enzyme, { mount, shallow } from 'enzyme';
@@ -36,9 +36,9 @@ describe('Login Component', () => {
   const wrapper = setup();
 
   // const preventDefault = jest.fn();
-  // it('renders without crashing', () => {
-  //   expect(shallowToJson(wrapper)).toMatchSnapshot();
-  // });
+  it('renders without crashing', () => {
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
   it('renders state initially', () => {
     expect(wrapper.state().email).toEqual('');
     expect(wrapper.state().password).toEqual('');

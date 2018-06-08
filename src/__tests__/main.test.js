@@ -1,48 +1,34 @@
-import localStorage from 'mock-local-storage';
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
-import expect from 'expect';
-import sinon from 'sinon';
+import localStorage from 'mock-local-storage';
 
 import Main from '../components/Main';
 
-// global.window = {};
-// window.localStorage = global.localStorage;
-
-// Enzyme.configure({ adapter: new Adapter() });
-
-const fakeSubmit = sinon.spy();
-const fakeOnChange = sinon.spy();
-
-// function setup() {u
-//   const options = new ReactRouterEnzymeContext();
-//   const props = {
-//     state: {
-//       eventList: [],
-//       isLoggedIn: false,
-//       open: false,
-//       payload: {},
-//       token: localStorage.getItem('access_token'),
-//     },
-//     onSubmit: fakeSubmit,
-//     onChange: fakeOnChange,
-//   };
-//   return mount(
-//     <Main {...props} />,
-//     options.get(),
-//   );
-// }
+global.window = {};
+window.localStorage = global.localStorage;
 
 describe('Main component', () => {
   const wrapper = shallow(<Main />);
-
-  // const preventDefault = jest.fn();
-  it('renders without crashing', () => {
-    // expect(shallowToJson(wrapper)).toMatchSnapshot();
+  it('Renders properly without crashing', () => {
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
-  it('renders a modal', () => {
-    expect(wrapper.find('Dialog').length).toEqual(1);
+  it('displays a search box', () => {
+    expect(wrapper.find('[type="submit"]').length).toEqual(1)
   });
+  it('renders a modal dialog', () => {
+    expect(wrapper.find('Dialog').length).toEqual(1)
+  })
+  it("should have one form element", () => {
+    expect(wrapper.find("form").length).toEqual(1);
+  });
+  it("renders state initially", () => {
+    expect(wrapper.state().eventList).toEqual([]);
+    expect(wrapper.state().isLoggedIn).toEqual(false);
+    expect(wrapper.state().open).toEqual(false);
+    expect(wrapper.state().payload).toEqual({});
+  });
+  it('renders a floating action button', () => {
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  })
 });

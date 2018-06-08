@@ -62,5 +62,16 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "NODE_ENV=test  nyc mocha --require babel-core/register  --reporter spec --require mock-local-storage --require mocha-snapshots --require ignore-styles  \"src/__tests__**/*.test.js\"",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/src/index.js",
+      "!**/src/Routes.js",
+      "!**/*.eslintrc.js",
+      "!**/coverage/**"
+    ]
   }
 }
