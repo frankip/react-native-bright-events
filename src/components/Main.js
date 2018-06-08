@@ -38,13 +38,16 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    axios.get(`${ROOT}/events/`)
+    axios
+      .get(`${ROOT}/events/?limit=30`)
       .then(response => {
         events = response.data;
-        this.setState({ ...this.state, eventList: response.data }, () => {
-        });
+        this.setState(
+          { ...this.state, eventList: response.data },
+          () => {}
+        );
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
       
