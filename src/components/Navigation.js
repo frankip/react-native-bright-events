@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-// foundation
-import { Row, Column } from "react-foundation-components/lib/global/grid";
 // local imports
 import { isTokenExpired } from './url_config';
 

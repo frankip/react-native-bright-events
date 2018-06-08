@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 // foundation
-import { Row, Column } from 'react-foundation-components/lib/global/grid';
+import { Row } from 'react-foundation-components/lib/global/grid';
 
 // local imports
 import EventCard from './EventCard';
 import Navigation from './Navigation';
-import { instance, ROOT, isTokenExpired } from './url_config';
+import { instance, ROOT } from './url_config';
 
 let events = [];
 
