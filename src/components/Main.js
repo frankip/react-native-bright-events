@@ -99,11 +99,9 @@ class Main extends Component {
     let searchRes = [];
     
     if (searchStr !== ""){
-      console.log('after if',searchStr);
 
       for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
         eventItem = events[eventIndex];
-        console.log("looping through items");
 
         if (eventItem.event
             .toLowerCase()

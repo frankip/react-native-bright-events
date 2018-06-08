@@ -85,7 +85,7 @@ class Login extends Component {
                       <input type="password" name="password" placeholder="password" required onChange={this.handleChange} />
                       </div>
                       <p className="forgot">
-                        <Link to="/">Forgot Password?</Link>
+                        <Link to="/signup">Forgot Password?</Link>
                       </p>
                       <button value="submit" className="button button-block">
                         Log In

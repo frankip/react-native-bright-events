@@ -90,7 +90,7 @@ class EventCardDetails extends Component {
     instance
       .put(`${ROOT}/events/${eventId.toString()}/`, payload)
       .then(response => {
-        toastr.success(response.data.message);
+        toastr.success('Event updated succesfully');
       })
       .catch(function (error) {
         toastr.warning(error.response.data.message);
@@ -124,16 +124,20 @@ class EventCardDetails extends Component {
     // action buttons for material UI dialog
     const action = [
       <RaisedButton
+        key={1}
         label="close"
-        primary={true}
+        secondary={true}
+        style={{ float: 'left' }}
         onClick={this.toggleOpenState}
       />,
       <RaisedButton
+        key={2}
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onClick={this.handleEdit}
-      />
+        type="submit"
+        onSubmit={this.handleSubmit}
+      />,
     ];
 
     return (
