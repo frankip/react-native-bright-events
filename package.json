@@ -71,7 +71,8 @@
       "!**/src/index.js",
       "!**/src/Routes.js",
       "!**/*.eslintrc.js",
-      "!**/coverage/**"
+      "!**/coverage/**",
+      "!**/*.config.js"
     ]
   }
 }

@@ -14,10 +14,6 @@ class App extends Component {
     };
   }
 
-  handleUpdateState = (data) => {
-    this.setState({ isLoggedIn: data.loggedin, token: data.token });
-  }
-
   render() {
     return (
         <Router>

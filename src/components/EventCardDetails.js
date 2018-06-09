@@ -124,20 +124,17 @@ class EventCardDetails extends Component {
     // action buttons for material UI dialog
     const action = [
       <RaisedButton
-        key={1}
         label="close"
         secondary={true}
         style={{ float: 'left' }}
         onClick={this.toggleOpenState}
       />,
       <RaisedButton
-        key={2}
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        type="submit"
-        onSubmit={this.handleSubmit}
-      />,
+        onClick={this.handleEdit}
+      />
     ];
 
     return (
