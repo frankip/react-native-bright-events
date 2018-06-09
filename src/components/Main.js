@@ -138,18 +138,17 @@ class Main extends Component {
     ];
 
     // loop through the events and pass them to the event card component
-    const eventlist = this.state.eventList.map((event) => 
-       (
-        <EventCard
-          key={event.id}
-          id={event.id}
-          event={event.event}
-          location={event.location}
-          date={event.date}
-          category={event.category}
-        />
-      )
-    );
+    const eventlist = this.state.eventList.map(event => (
+      <EventCard
+        key={event.id}
+        id={event.id}
+        event={event.event}
+        location={event.location}
+        date={event.date}
+        category={event.category}
+        created_by={event.created_by}
+      />
+    ));
 
 
     return (

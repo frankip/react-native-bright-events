@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import toastr from "toastr";
+import jwtDecode from "jwt-decode";
 
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
 import DatePicker from "material-ui/DatePicker";
-import TextField from "material-ui/TextField";
 
 // foundation
 import { Row, Column } from "react-foundation-components/lib/global/grid";
@@ -89,12 +89,13 @@ class EventCardDetails extends Component {
 
     instance
       .put(`${ROOT}/events/${eventId.toString()}/`, payload)
-      .then(response => {
-        toastr.success('Event updated succesfully');
-      })
+      .then(() => {
+          toastr.success('Event updated succesfully');
+        })
       .catch(function (error) {
         toastr.warning(error.response.data.message);
       });
+      this.props.history.push(`/events/${eventId.toString()}`);
   };
 
   // delete event
@@ -115,8 +116,8 @@ class EventCardDetails extends Component {
   // get data from input and update state 
   handleChange =  e => {
     // let event = this.state.event;
-    let event = Object.assign({}, this.state.event, {[e.target.name]: e.target.value});
-    // event[e.target.name] = e.target.value;
+    let event = Object.assign({}, this.state.event);
+    event[e.target.name] = e.target.value;
     this.setState({ event });
   };
 
@@ -161,7 +162,9 @@ class EventCardDetails extends Component {
           </div>
           {this.state.token && !isTokenExpired(this.state.token) ?
           <div className="column large-3 small-12">
-            <button className="button expanded" onClick={this.handleRsvp}>
+              <button
+                disabled={this.state.event.created_by === jwtDecode(this.state.token).sub ? true : false}
+              className="button expanded" onClick={this.handleRsvp}>
               RSVP
             </button>
             <div className="row interactions">
@@ -182,7 +185,7 @@ class EventCardDetails extends Component {
           :null
           }
           <Dialog
-            title="Create a New Event"
+            title="Update Event"
             actions={action}
             modal={true}
             open={this.state.open}
@@ -190,71 +193,35 @@ class EventCardDetails extends Component {
             autoScrollBodyContent={true}
           >
             <Row>
-              <Row>
-                <Column large={6}>
-                  <TextField
-                    floatingLabelText="Event Name"
-                    floatingLabelFixed={true}
-                    defaultValue={
-                      this.state.event.title || this.state.event.event
-                    }
-                    fullWidth={true}
-                    name="event"
-                    onChange={this.handleChange}
-                    inputStyle={styles.formstyle}
-                  />
-                </Column>
-                <Column large={6}>
-                  <TextField
-                    floatingLabelText="category"
-                    floatingLabelFixed={true}
-                    defaultValue={this.state.event.category}
-                    name="category"
-                    fullWidth={true}
-                    inputStyle={styles.formstyle}
-                    onChange={this.handleChange}
-                  />{" "}
-                  <br />
-                </Column>
-              </Row>
-              <Row>
-                <Column large={6}>
-                  <TextField
-                    floatingLabelText="Event Location"
-                    floatingLabelFixed={true}
-                    name="location"
-                    defaultValue={this.state.event.location}
-                    fullWidth={true}
-                    inputStyle={styles.formstyle}
-                    onChange={this.handleChange}
-                  />
-                </Column>
-                <Column large={6}>
-                  <DatePicker
-                    hintText="Event date"
-                    name="date"
-                    mode="landscape"
-                    fullWidth={true}
-                    defaultDate={new Date(this.state.event.date)}
-                    inputStyle={styles.formstyle}
-                    onChange={(x, date) => this.setDate(x, date, 'date')}
-                  />
-                </Column>
-              </Row>
-              <Row>
-                <Column small={12} medium={12} large={12}>
-                  <TextField
-                    floatingLabelText="Description"
-                    name="description"
-                    multiLine={true}
-                    fullWidth={true}
-                    rows={4}
-                    onChange={this.handleChange}
-                  />{" "}
-                  <br />
-                </Column>
-              </Row>
-              <br />
+              <form method="POST" onSubmit={this.handleSubmit}>
+                <Row>
+                  <Column large={6}>
+                    <input type="text" name="event" placeholder="Event Name" required value={this.state.event.title || this.state.event.event} onChange={this.handleChange} />
+                  </Column>
+                  <Column large={6}>
+                    <input type="text" name="category" placeholder="category" required value={ this.state.event.category } onChange={this.handleChange} />
+                  </Column>
+                </Row>
+                <Row>
+                  <Column large={6}>
+                    <input type="text" name="location" placeholder="Event Location" required value={this.state.event.location} onChange={this.handleChange} />
+                  </Column>
+                  <Column large={6}>
+                    <DatePicker
+                      hintText="Event date"
+                      name="date"
+                      fullWidth={true}
+                      inputStyle={styles.formstyle}
+                      defaultDate={new Date(this.state.event.date)}
+                      onChange={(x, date) => this.setDate(x, date)} />
+                  </Column>
+                </Row>
+                <Row>
+                  <Column small={12} medium={12} large={12}>
+                    <textarea name="description" type="text" placeholder="Event description" cols="30" rows="5" onChange={this.handleChange}></textarea>
+                  </Column>
+                </Row>
+              </form>
             </Row>
           </Dialog>
         </section>

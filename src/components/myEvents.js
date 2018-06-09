@@ -5,9 +5,9 @@ import { Row } from 'react-foundation-components/lib/global/grid';
 // local imports
 import EventCard from './EventCard';
 import Navigation from './Navigation';
-import { instance, ROOT } from './url_config';
+import { instance, ROOT, isTokenExpired } from "./url_config";
 
-let events = [];
+const events = [];
 
 class Myevents extends Component {
   constructor() {
@@ -19,29 +19,33 @@ class Myevents extends Component {
   }
 
   componentWillMount() {
-    instance.get(`${ROOT}/events/`)
-      .then(response => {
-        events = response.data;
-        this.setState({ ...this.state, eventList: response.data }, () => {
+    if (this.state.token && !isTokenExpired(this.state.token)) {
+      instance.get(`${ROOT}/events/`)
+        .then(response => {
+          const events = response.data;
+          this.setState({ ...this.state, eventList: response.data }, () => {
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    } else {
+      this.props.history.replace('/login');
+    }
   }
+
   render() {
-    const eventlist = this.state.eventList.map((event) =>
-      (
-        <EventCard
-          key={event.id}
-          id={event.id}
-          event={event.event}
-          location={event.location}
-          date={event.date}
-          category={event.category}
-        />
-      ),
-    );
+    const eventlist = this.state.eventList.map(event => (
+      <EventCard
+        key={event.id}
+        id={event.id}
+        event={event.event}
+        location={event.location}
+        date={event.date}
+        category={event.category}
+        created_by={event.created_by}
+      />
+    ));
     return (
       <div>
         <Navigation />
@@ -60,5 +64,5 @@ class Myevents extends Component {
   }
 }
 
-export default Myevents
-;
+export default Myevents;
+
