@@ -64,7 +64,6 @@ class Main extends Component {
     this.setState({ open: false });
 
     let payload = this.state.payload
-    payload['date'] = this.state.date;
     
     // axios instance for posting to the api endpoint events
     instance
@@ -87,7 +86,9 @@ class Main extends Component {
 
   // receives the date from datepicker and updates the state
   setDate(x, date){
-    this.setState({ date: date.toDateString() });
+    const { payload } = this.state;
+    payload["date"] = date.toDateString();
+    this.setState({ payload });
   }
 
   // searches through the events 
@@ -146,6 +147,7 @@ class Main extends Component {
         location={event.location}
         date={event.date}
         category={event.category}
+        description={event.description}
         created_by={event.created_by}
       />
     ));

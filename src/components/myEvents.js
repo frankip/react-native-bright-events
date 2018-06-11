@@ -43,6 +43,7 @@ class Myevents extends Component {
         location={event.location}
         date={event.date}
         category={event.category}
+        description={event.description}
         created_by={event.created_by}
       />
     ));

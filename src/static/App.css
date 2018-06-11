@@ -481,14 +481,23 @@ textarea {
 
 .interactions .left {
     display: inline-flex;
-    float: left;
+    /* float: right; */
     padding: 1em;
-    margin-right: 3em;
+    /* margin-right: 3em; */
+    width: 100%;
 }
 
-.interactions .fa {
+.interactions .left .fa-pencil {
     color: #179b77;
-    padding: 0.7em;
+    padding: 0 1em;
+    float: left;
+    margin-right: 5em;
+}
+.interactions .left .fa-trash-o{
+    color: #e21336;
+    padding: 0 1em;
+    float: right;
+    margin-left: 5em;
 }
 
 /* search  */

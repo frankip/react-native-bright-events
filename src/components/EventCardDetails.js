@@ -111,7 +111,7 @@ class EventCardDetails extends Component {
           toastr.success('Event updated succesfully');
         })
       .catch(function (error) {
-        toastr.warning(error.response.data.message);
+        toastr.warning("Failed to update ");
       });
       this.props.history.replace(`/events/${eventId.toString()}`);
   };
@@ -170,17 +170,13 @@ class EventCardDetails extends Component {
         <section className="row event-description">
           <div className="column large-8 small-12">
             <h3>Description</h3>
-            <p>
-              Odit et sint temporibus facilis omnis molestiae et. Et laborum
-              sint dolorem eveniet. Qui quaerat reprehenderit omnis provident.
-              Necessitatibus blanditiis esse delectus ipsum. Non quibusdam
-              quaerat laborum. Fugit ipsa possimus blanditiis possimus cumque
-              perspiciatis.
-            </p>
-            {this.state.token && !isTokenExpired(this.state.token) ?
-            <div>
-                {this.state.event.created_by === jwtDecode(this.state.token).sub ?
-                  <div className="row interactions">
+            {this.state.event.description ? 
+              <p>{this.state.event.description}</p>
+            :
+            <p> There is no description </p>
+            }
+            {this.state.token && !isTokenExpired(this.state.token) ? <div>
+                {this.state.event.created_by === jwtDecode(this.state.token).sub ? <div className="row interactions">
                     <div className="left">
                       <li>
                         <button href="#" onClick={this.toggleOpenState}>
@@ -193,48 +189,29 @@ class EventCardDetails extends Component {
                         </button>
                       </li>
                     </div>
-                  </div> : null
-                }
-            </div>
-            :null
-            }
+                  </div> : null}
+              </div> : null}
           </div>
-          {this.state.token && !isTokenExpired(this.state.token) ?
-          <div className="column large-3 small-12">
-              {this.state.event.created_by === jwtDecode(this.state.token).sub ?
-              <div>
-                <h3> Guest list </h3>
-                  {this.state.rsvpList.length === 0 ?
-                  <p> There are no guests for your event </p>
-                :
-              <div>
-                      {this.state.rsvpList.map((rsvp,idx) => ( 
-                      <div key={idx}>
-                        <h6>
-                          {rsvp.name}&emsp; <i>{rsvp.email}</i>
-                        </h6>
-                      </div>
-                    ))} 
-              </div>
-                }
-            </div>
-              :
-              <button
-                className="button expanded" onClick={this.handleRsvp}>
-                RSVP
-              </button>
-              }
-          </div>
-          :null
-          }
-          <Dialog
-            title="Update Event"
-            actions={action}
-            modal={true}
-            open={this.state.open}
-            onRequestClose={this.toggleOpenState}
-            autoScrollBodyContent={true}
-          >
+          {this.state.token && !isTokenExpired(this.state.token) ? <div className="column large-3 small-12">
+              {this.state.event.created_by === jwtDecode(this.state.token).sub ? <div>
+                  <h3> Guest list </h3>
+                  {this.state.rsvpList.length === 0 ? <p>
+                      {" "}
+                      There are no guests for your event{" "}
+                    </p> : <div>
+                      {this.state.rsvpList.map((rsvp, idx) => (
+                        <div key={idx}>
+                          <h6>
+                            {rsvp.name}&emsp; <i>{rsvp.email}</i>
+                          </h6>
+                        </div>
+                      ))}
+                    </div>}
+                </div> : <button className="button expanded" onClick={this.handleRsvp}>
+                  RSVP
+                </button>}
+            </div> : null}
+          <Dialog title="Update Event" actions={action} modal={true} open={this.state.open} onRequestClose={this.toggleOpenState} autoScrollBodyContent={true}>
             <Row>
               <form method="POST" onSubmit={this.handleSubmit}>
                 <Row>
@@ -242,7 +219,7 @@ class EventCardDetails extends Component {
                     <input type="text" name="event" placeholder="Event Name" required value={this.state.event.title || this.state.event.event} onChange={this.handleChange} />
                   </Column>
                   <Column large={6}>
-                    <input type="text" name="category" placeholder="category" required value={ this.state.event.category } onChange={this.handleChange} />
+                    <input type="text" name="category" placeholder="category" required value={this.state.event.category} onChange={this.handleChange} />
                   </Column>
                 </Row>
                 <Row>
@@ -250,18 +227,12 @@ class EventCardDetails extends Component {
                     <input type="text" name="location" placeholder="Event Location" required value={this.state.event.location} onChange={this.handleChange} />
                   </Column>
                   <Column large={6}>
-                    <DatePicker
-                      hintText="Event date"
-                      name="date"
-                      fullWidth={true}
-                      inputStyle={styles.formstyle}
-                      defaultDate={new Date(this.state.event.date)}
-                      onChange={(x, date) => this.setDate(x, date)} />
+                    <DatePicker hintText="Event date" name="date" fullWidth={true} inputStyle={styles.formstyle} defaultDate={new Date(this.state.event.date)} onChange={(x, date) => this.setDate(x, date)} />
                   </Column>
                 </Row>
                 <Row>
                   <Column small={12} medium={12} large={12}>
-                    <textarea name="description" type="text" placeholder="Event description" cols="30" rows="5" onChange={this.handleChange}></textarea>
+                  <textarea name="description" type="text" placeholder="Event description" value={this.state.event.description || ""} cols="30" rows="5" onChange={this.handleChange} />
                   </Column>
                 </Row>
               </form>
