@@ -27,6 +27,7 @@ class EventCardDetails extends Component {
     this.state = {
       token: localStorage.getItem("access_token"),
       open: false,
+      isOpened: false,
       event: {},
       rsvpList: []
     };
@@ -36,6 +37,11 @@ class EventCardDetails extends Component {
     this.setState({
       open: !this.state.open
     });
+  };
+
+  // Openning and clossing the delete action dialog
+  toggleDeleteDialog = () => {
+    this.setState({ isOpened: !this.state.isOpened });
   };
 
   // fetch event details if there are no props
@@ -119,6 +125,7 @@ class EventCardDetails extends Component {
   // delete event
   handleDelete = () => {
     let IDEvent = this.state.event.id;
+    this.setState({ isOpened: false });
     instance
       .delete(`${ROOT}/events/${IDEvent.toString()}`)
       .then(response => {
@@ -155,6 +162,20 @@ class EventCardDetails extends Component {
         onClick={this.handleEdit}
       />
     ];
+    const actionDelete = [
+      <RaisedButton
+        label="Cancel"
+        primary={true}
+        style={{ float: 'left' }}
+        onClick={this.toggleDeleteDialog}
+      />,
+      <RaisedButton
+        label="Delete"
+        primary={false}
+        onClick={this.handleDelete}
+      />,
+    ];
+
 
     return (
       <div>
@@ -184,7 +205,7 @@ class EventCardDetails extends Component {
                         </button>
                       </li>
                       <li>
-                        <button href="#" onClick={this.handleDelete}>
+                        <button href="#" onClick={this.toggleDeleteDialog}>
                           <i className="fa fa-trash-o fa-3x" />
                         </button>
                       </li>
@@ -238,6 +259,14 @@ class EventCardDetails extends Component {
               </form>
             </Row>
           </Dialog>
+          <Dialog
+            actions={actionDelete}
+            modal={false}
+            open={this.state.isOpened}
+            onRequestClose={this.toggleDeleteDialog}
+          >
+           Are you sure you want to delete this event?
+        </Dialog>
         </section>
       </div>
     );
