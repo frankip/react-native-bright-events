@@ -123,7 +123,7 @@ class EventCardDetails extends Component {
       .delete(`${ROOT}/events/${IDEvent.toString()}`)
       .then(response => {
         toastr.success(response.data.message);
-        this.props.history.push("/");
+        this.props.history.replace("/myevents");
       })
       .catch(function(error) {
         toastr.warning(error.response.data.message);

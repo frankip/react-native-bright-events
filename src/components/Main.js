@@ -37,20 +37,23 @@ class Main extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
+  fetchEvents(){
     axios
       .get(`${ROOT}/events/?limit=30`)
       .then(response => {
         events = response.data;
         this.setState(
           { ...this.state, eventList: response.data },
-          () => {}
+          () => { }
         );
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
-      
+  }
+
+  componentWillMount() {
+    this.fetchEvents()
   }
 
   // toggle for openning and clossing the dialog
@@ -70,11 +73,11 @@ class Main extends Component {
       .post(ROOT + "/events/", payload)
       .then(response => {
         toastr.success(response.statusText);
+        this.fetchEvents();
       })
       .catch(function(error) {
         toastr.warning(error.response.data.message);
       });
-    this.setState({payload:{}});
   };
 
   // Receives the data from the input and update the state
@@ -94,7 +97,7 @@ class Main extends Component {
   // searches through the events 
   handleSearch = e => {
     let searchStr = "";
-    searchStr = e.target.value.toLowerCase().replace(/\s/g, '');
+    searchStr = e.target.value.toLowerCase().trim()
     let eventItem;
     
     let searchRes = [];
