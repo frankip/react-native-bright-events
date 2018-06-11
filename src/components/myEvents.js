@@ -49,11 +49,7 @@ class Myevents extends Component {
   }
 
   componentWillMount() {
-    if (this.state.token && !isTokenExpired(this.state.token)) {
       this.fetchPersonalEvents()
-    } else {
-      this.props.history.replace('/login');
-    }
   }
   // toggle for openning and clossing the dialog
   toggleOpenState = () => {
