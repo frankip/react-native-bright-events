@@ -28,6 +28,7 @@ class EventCardDetails extends Component {
       token: localStorage.getItem("access_token"),
       open: false,
       event: {},
+      rsvpList: []
     };
   }
   // toggle opening and closing dialog
@@ -50,11 +51,26 @@ class EventCardDetails extends Component {
         console.log(error);
       });
   }
+
   // onchange handler for date picker
   setDate(x, date) {
     let event = Object.assign({}, this.state.event);
     event["date"] = date.toDateString();
     this.setState({ event });
+  }
+
+  // fetch RSVP list
+  retrieveRSVPList(){
+    let eventId = this.props.match.params.id;
+
+    instance
+      .get(`${ROOT}/events/${eventId.toString()}/rsvp/`)
+      .then(response => {
+        this.setState({ rsvpList: response.data})
+      })
+      .catch(function (error) {
+        
+      });
   }
 
   componentWillMount() {
@@ -63,6 +79,7 @@ class EventCardDetails extends Component {
     } else {
       this.getEventFromId();
     }
+    this.retrieveRSVPList()
   }
 
   // Make rsvp reservation
@@ -73,6 +90,8 @@ class EventCardDetails extends Component {
       .post(`${ROOT}/events/${eventId.toString()}/rsvp/`)
       .then(response => {
         toastr.success(response.data.message);
+        console.log(response.data.message);
+        
       })
       .catch(function(error) {
         toastr.warning(error.response.data.message);
@@ -156,13 +175,49 @@ class EventCardDetails extends Component {
               sint dolorem eveniet. Qui quaerat reprehenderit omnis provident.
               Necessitatibus blanditiis esse delectus ipsum. Non quibusdam
               quaerat laborum. Fugit ipsa possimus blanditiis possimus cumque
-              perspiciatis.{" "}
+              perspiciatis.
             </p>
+            {this.state.token && !isTokenExpired(this.state.token) ?
+            <div>
+                {this.state.event.created_by === jwtDecode(this.state.token).sub ?
+                  <div className="row interactions">
+                    <div className="left">
+                      <li>
+                        <button href="#" onClick={this.toggleOpenState}>
+                          <i className="fa fa-pencil fa-3x" />{" "}
+                        </button>
+                      </li>
+                      <li>
+                        <button href="#" onClick={this.handleDelete}>
+                          <i className="fa fa-trash-o fa-3x" />
+                        </button>
+                      </li>
+                    </div>
+                  </div> : null
+                }
+            </div>
+            :null
+            }
           </div>
           {this.state.token && !isTokenExpired(this.state.token) ?
           <div className="column large-3 small-12">
               {this.state.event.created_by === jwtDecode(this.state.token).sub ?
-              null
+              <div>
+                <h3> Guest list </h3>
+                  {this.state.rsvpList.length === 0 ?
+                  <p> There are no guests for your event </p>
+                :
+              <div>
+                      {this.state.rsvpList.map((rsvp,idx) => ( 
+                      <div key={idx}>
+                        <h6>
+                          {rsvp.name}&emsp; <i>{rsvp.email}</i>
+                        </h6>
+                      </div>
+                    ))} 
+              </div>
+                }
+            </div>
               :
               <button
                 className="button expanded" onClick={this.handleRsvp}>
