@@ -467,23 +467,28 @@ textarea {
 .event-description .button {
     margin: 1em 0;
 }
+.event-description h3{
+    font-weight: 600;
+    margin-top: 2em;
+}
+
 
 .interactions {
     display: block;
     list-style: none;
+    color: #179b77;
 }
 
-.interactions .right {
+.interactions .left {
     display: inline-flex;
-    float: right;
+    float: left;
     padding: 1em;
     margin-right: 3em;
 }
 
-.interactions a {
-    color: white;
-    margin: 1em;
-    font-size: 2em;
+.interactions .fa {
+    color: #179b77;
+    padding: 0.7em;
 }
 
 /* search  */

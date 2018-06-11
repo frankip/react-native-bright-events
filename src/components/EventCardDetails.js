@@ -12,8 +12,7 @@ import { Row, Column } from "react-foundation-components/lib/global/grid";
 
 // local imports
 import Navigation from './Navigation';
-import { instance, ROOT } from "./url_config";
-import { isTokenExpired } from "./url_config";
+import { instance, ROOT, isTokenExpired } from "./url_config";
 
 const styles = {
   formstyle: {
@@ -95,7 +94,7 @@ class EventCardDetails extends Component {
       .catch(function (error) {
         toastr.warning(error.response.data.message);
       });
-      this.props.history.push(`/events/${eventId.toString()}`);
+      this.props.history.replace(`/events/${eventId.toString()}`);
   };
 
   // delete event
@@ -162,25 +161,14 @@ class EventCardDetails extends Component {
           </div>
           {this.state.token && !isTokenExpired(this.state.token) ?
           <div className="column large-3 small-12">
+              {this.state.event.created_by === jwtDecode(this.state.token).sub ?
+              null
+              :
               <button
-                disabled={this.state.event.created_by === jwtDecode(this.state.token).sub ? true : false}
-              className="button expanded" onClick={this.handleRsvp}>
-              RSVP
-            </button>
-            <div className="row interactions">
-              <div className="right">
-                <li>
-                  <button href="#" onClick={this.toggleOpenState}>
-                    <i className="fa fa-pencil fa-5x" />{" "}
-                  </button>
-                </li>
-                <li>
-                  <button href="#" onClick={this.handleDelete}>
-                    <i className="fa fa-trash-o fa-5x" />
-                  </button>
-                </li>
-              </div>
-            </div>
+                className="button expanded" onClick={this.handleRsvp}>
+                RSVP
+              </button>
+              }
           </div>
           :null
           }
