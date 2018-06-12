@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from "axios";
 import toastr from "toastr";
 
 // foundation
@@ -16,7 +15,6 @@ import EventCard from './EventCard';
 import Navigation from './Navigation';
 import { instance, ROOT, isTokenExpired } from './url_config';
 
-const events = [];
 
 const styles = {
   formstyle: {

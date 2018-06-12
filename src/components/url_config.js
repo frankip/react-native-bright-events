@@ -3,7 +3,7 @@ import tokenProvider from 'axios-token-interceptor';
 import jwtDecode from 'jwt-decode';
 
 
-export const ROOT = 'http://127.0.0.1:5000/api';
+export const ROOT = 'https://eventsbright.herokuapp.com/api';
 
 export const instance = axios.create({});
 instance.interceptors.request.use(tokenProvider({
