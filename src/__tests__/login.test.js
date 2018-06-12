@@ -34,7 +34,6 @@ function setup() {
 
 describe('Login Component', () => {
   const wrapper = setup();
-
   // const preventDefault = jest.fn();
   it('renders without crashing', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();

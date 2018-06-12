@@ -9,7 +9,8 @@ import Navigation from '../components/Navigation';
 const wrapper = shallow(<Navigation />);
 
 describe('Navigation Component', () => {
-  it("Renders properly ", () => {
+  wrapper.instance().handleLogout();
+  it('Renders properly ', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
   it('has navigation elememt', () => {
@@ -24,5 +25,4 @@ describe('Navigation Component', () => {
   it('renders Link to other components', () => {
     expect(wrapper.find('Link').length).toEqual(2);
   });
-
 });

@@ -16,12 +16,12 @@ class App extends Component {
 
   render() {
     return (
-        <Router>
-          <div className="App">
-            {/* <Navigation /> */}
-            <Approutes />
-          </div>
-        </Router>
+      <Router>
+        <div className="App">
+          {/* <Navigation /> */}
+          <Approutes />
+        </div>
+      </Router>
     );
   }
 }

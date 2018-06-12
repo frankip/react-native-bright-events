@@ -37,6 +37,7 @@ function setup() {
 
 describe('Register Component', () => {
   const wrapper = setup();
+  wrapper.instance().handleOnSubmit({ preventDefault() { } });
 
   it('renders without crashing', () => {
     expect(shallowToJson(<Registration />)).toMatchSnapshot();

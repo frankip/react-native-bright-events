@@ -99,19 +99,15 @@ class Main extends Component {
   handleSearch = e => {
     let searchStr = "";
     searchStr = e.target.value.toLowerCase().trim()
-    let eventItem;
     
     let searchRes = [];
     
     if (searchStr !== ""){
 
       for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
-        eventItem = events[eventIndex];
+        let eventItem = events[eventIndex];
 
-        if (eventItem.event
-            .toLowerCase()
-            .includes(
-              searchStr
+        if (eventItem.event.toLowerCase().includes(searchStr
             ) || eventItem.location.toLowerCase().includes(searchStr)) {
           searchRes.push(eventItem);
         }

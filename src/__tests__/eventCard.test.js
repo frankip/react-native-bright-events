@@ -3,7 +3,6 @@ import Enzyme, { mount, shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import expect from 'expect';
-import assert from 'assert';
 import EventCard from '../components/EventCard';
 
 Enzyme.configure({ adapter: new Adapter() });
