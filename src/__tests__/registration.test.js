@@ -18,11 +18,13 @@ function setup() {
   const options = new ReactRouterEnzymeContext();
   const props = {
     state: {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      isLoged: false,
+      payload: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      },
     },
     onSubmit: fakeSubmit,
     onChange: fakeOnChange,
@@ -41,10 +43,10 @@ describe('Register Component', () => {
     expect(shallowToJson(<Registration />)).toMatchSnapshot();
   });
   it('renders state initially', () => {
-    expect(wrapper.state().first_name).toEqual('');
-    expect(wrapper.state().last_name).toEqual('');
-    expect(wrapper.state().email).toEqual('');
-    expect(wrapper.state().password).toEqual('');
+    expect(wrapper.state().payload.first_name).toEqual('');
+    expect(wrapper.state().payload.last_name).toEqual('');
+    expect(wrapper.state().payload.email).toEqual('');
+    expect(wrapper.state().payload.password).toEqual('');
   });
   it('renders appropriate number of inputs', () => {
     const htmlwrapper = setup();
