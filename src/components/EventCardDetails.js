@@ -47,14 +47,12 @@ class EventCardDetails extends Component {
   // fetch event details if there are no props
   getEventFromId() {
     const eventId = this.props.match.params.id;
-    console.log("getting event from api");
     axios
       .get(`${ROOT}/events/${eventId.toString()}`)
       .then(response => {
         this.setState({ event: response.data });
       })
       .catch(function(error) {
-        console.log(error);
       });
   }
 
@@ -75,7 +73,6 @@ class EventCardDetails extends Component {
         this.setState({ rsvpList: response.data})
       })
       .catch(function (error) {
-        
       });
   }
 
@@ -96,7 +93,6 @@ class EventCardDetails extends Component {
       .post(`${ROOT}/events/${eventId.toString()}/rsvp/`)
       .then(response => {
         toastr.success(response.data.message);
-        console.log(response.data.message);
         
       })
       .catch(function(error) {
@@ -109,7 +105,7 @@ class EventCardDetails extends Component {
     let eventId = this.props.match.params.id;
     let payload = this.state.event;
     
-    this.setState({ open: false });
+    this.toggleOpenState()
 
     instance
       .put(`${ROOT}/events/${eventId.toString()}/`, payload)
@@ -125,7 +121,7 @@ class EventCardDetails extends Component {
   // delete event
   handleDelete = () => {
     let IDEvent = this.state.event.id;
-    this.setState({ isOpened: false });
+    this.toggleOpenState()
     instance
       .delete(`${ROOT}/events/${IDEvent.toString()}`)
       .then(response => {
@@ -134,13 +130,11 @@ class EventCardDetails extends Component {
       })
       .catch(function(error) {
         toastr.warning(error.response.data.message);
-        console.log(error.response.data.message);
       });
   };
 
   // get data from input and update state 
   handleChange =  e => {
-    // let event = this.state.event;
     let event = Object.assign({}, this.state.event);
     event[e.target.name] = e.target.value;
     this.setState({ event });
@@ -274,4 +268,3 @@ class EventCardDetails extends Component {
 }
 
 export default EventCardDetails;
-

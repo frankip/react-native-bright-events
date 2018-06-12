@@ -43,7 +43,6 @@ class Myevents extends Component {
         });
       })
       .catch(function (error) {
-        console.log(error);
       });
   }
 
@@ -71,7 +70,7 @@ class Myevents extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({ open: false });
+    this.toggleOpenState()
 
     let payload = this.state.payload
 

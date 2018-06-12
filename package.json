@@ -72,8 +72,6 @@
       "!**/vendor/**",
       "!**/src/index.js",
       "!**/src/Routes.js",
-      "!**/src/setupTests.js",
-      "!**/src/components/url_config.js",
       "!**/*.eslintrc.js",
       "!**/coverage/**",
       "!**/*.config.js"

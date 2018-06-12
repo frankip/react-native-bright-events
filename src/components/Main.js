@@ -50,7 +50,6 @@ class Main extends Component {
         );
       })
       .catch(function (error) {
-        console.log(error);
       });
   }
 
@@ -66,7 +65,7 @@ class Main extends Component {
   // takes care of submiting and creating a new event
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({ open: false });
+    this.toggleOpenState();
 
     let payload = this.state.payload
     
