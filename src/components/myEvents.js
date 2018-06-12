@@ -9,6 +9,7 @@ import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import DatePicker from 'material-ui/DatePicker';
+import ContentAdd from "material-ui/svg-icons/content/add";
 
 // local imports
 import EventCard from './EventCard';
@@ -120,8 +121,7 @@ class Myevents extends Component {
         created_by={event.created_by}
       />
     ));
-    return (
-      <div>
+    return <div>
         <Navigation />
         <section className="row">
           <div>
@@ -130,21 +130,14 @@ class Myevents extends Component {
               <input className="input-group-field medium-6 cell" type="search" name="search" onChange={this.handleSearch} />
             </div>
           </div>
-          {this.state.token && !isTokenExpired(this.state.token) ?
-            <FloatingActionButton iconClassName="add" label="add event" onClick={this.toggleOpenState} />
-            : null
-          }
+          {this.state.token && !isTokenExpired(this.state.token) ? <FloatingActionButton className="fab" label="add event" onClick={this.toggleOpenState}>
+              <ContentAdd />
+            </FloatingActionButton> : null}
 
           <Row id="eventCard" largeUp={3} mediumUp={2} smallUp={1}>
             {eventlist}
           </Row>
-          <Dialog
-            title="Create a New Event"
-            modal={false}
-            open={this.state.open}
-            onRequestClose={this.toggleOpenState}
-            autoScrollBodyContent
-          >
+          <Dialog title="Create a New Event" modal={false} open={this.state.open} onRequestClose={this.toggleOpenState} autoScrollBodyContent>
             <Row>
               <form method="POST" onSubmit={this.handleSubmit}>
                 <Row>
@@ -160,28 +153,22 @@ class Myevents extends Component {
                     <input type="text" name="location" placeholder="Event Location" required onChange={this.handleChange} />
                   </Column>
                   <Column large={6}>
-                    <DatePicker
-                      hintText="Event date"
-                      name="date"
-                      fullWidth
-                      inputStyle={styles.formstyle}
-                      onChange={(x, date) => this.setDate(x, date)}
-                    />
+                    <DatePicker hintText="Event date" name="date" fullWidth inputStyle={styles.formstyle} onChange={(x, date) => this.setDate(x, date)} />
                   </Column>
                 </Row>
                 <Row>
                   <Column small={12} medium={12} large={12}>
-                    <textarea name="description" type="text" placeholder="Event description" cols="30" rows="5" onChange={this.handleChange}></textarea>
+                    <textarea name="description" type="text" placeholder="Event description" cols="30" rows="5" onChange={this.handleChange} />
                   </Column>
                 </Row>
-                <div value="submit" style={{ textAlign: 'right', padding: 8, margin: '24px -24px -24px -24px' }}>
+                <div value="submit" style={{ textAlign: "right", padding: 8, margin: "24px -24px -24px -24px" }}>
                   {action}
                 </div>
               </form>
             </Row>
           </Dialog>
         </section>
-      </div>);
+      </div>;
   }
 }
 
