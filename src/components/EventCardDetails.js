@@ -170,6 +170,11 @@ class EventCardDetails extends Component {
       />,
     ];
 
+    const rsvps = this.state.rsvpList.map((rsvp, idx) => (
+      <div key={idx}>
+        <h5>{rsvp.name}</h5> <span className='email-view'>{rsvp.email}</span>
+      </div>
+    ));
 
     return (
       <div>
@@ -188,7 +193,7 @@ class EventCardDetails extends Component {
             {this.state.event.description ? 
               <p>{this.state.event.description}</p>
             :
-            <p> There is no description </p>
+            <p> There is no description for this event </p>
             }
             {this.state.token && !isTokenExpired(this.state.token) ? <div>
                 {this.state.event.created_by === jwtDecode(this.state.token).sub ? <div className="row interactions">
@@ -208,24 +213,22 @@ class EventCardDetails extends Component {
               </div> : null}
           </div>
           {this.state.token && !isTokenExpired(this.state.token) ? <div className="column large-3 small-12">
-              {this.state.event.created_by === jwtDecode(this.state.token).sub ? <div>
+              {this.state.event.created_by === jwtDecode(this.state.token).sub ? 
+              <div>
                   <h3> Guest list </h3>
-                  {this.state.rsvpList.length === 0 ? <p>
-                      {" "}
-                      There are no guests for your event{" "}
-                    </p> : <div>
-                      {this.state.rsvpList.map((rsvp, idx) => (
-                        <div key={idx}>
-                          <h6>
-                            {rsvp.name}&emsp; <i>{rsvp.email}</i>
-                          </h6>
-                        </div>
-                      ))}
-                    </div>}
-                </div> : <button className="button expanded" onClick={this.handleRsvp}>
+                  {this.state.rsvpList.length === 0 ? 
+                  <p>There are no guests for your event</p> 
+                  : <div>
+                      {rsvps}
+                    </div>
+                  }
+                </div> 
+                : <button className="button expanded" onClick={this.handleRsvp}>
                   RSVP
                 </button>}
-            </div> : null}
+            </div> 
+            : null
+            }
           <Dialog title="Update Event" actions={action} modal={true} open={this.state.open} onRequestClose={this.toggleOpenState} autoScrollBodyContent={true}>
             <Row>
               <form method="POST" onSubmit={this.handleSubmit}>

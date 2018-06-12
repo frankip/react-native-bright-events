@@ -35,6 +35,7 @@ class Myevents extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // fetch events from api endpoint
   fetchPersonalEvents(){
     instance.get(`${ROOT}/events/`)
       .then(response => {
@@ -58,7 +59,6 @@ class Myevents extends Component {
     const { payload } = this.state;
     payload[e.target.name] = e.target.value;
     this.setState({ ...this.state, payload });
-    
   };
 
   // receives the date from datepicker and updates the state
@@ -68,6 +68,7 @@ class Myevents extends Component {
     this.setState({ payload });
   }
 
+  // submits the payload to the api
   handleSubmit(e) {
     e.preventDefault();
     this.toggleOpenState()

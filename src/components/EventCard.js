@@ -15,9 +15,9 @@ class EventCard extends Component {
           <p className="small">{values.date}</p>
           <br /> <i className="fa fa-map-marker fa-2x fa-fw" aria-hidden="true" />
           <p className="small">{values.location}</p>
-          <Link className="button small expanded hollow" to={{ pathname: `/events/${values.id}`, state: { event: values } }}>
+          <Link href className="button small expanded hollow" to={{ pathname: `/events/${values.id}`, state: { event: values } }}>
               View more details
-            </Link>
+          </Link>
         </div>
       </Column>
     );

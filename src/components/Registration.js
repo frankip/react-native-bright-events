@@ -54,8 +54,6 @@ class Registration extends Component {
   }
 
   handleChange = e => {
-    
-    // this.setState({ ...this.state, [e.target.name]: e.target.value });
     const { payload } = this.state;
     payload[e.target.name] = e.target.value;
     this.setState({ ...this.state, payload });

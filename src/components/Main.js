@@ -39,6 +39,7 @@ class Main extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // retrieve events from api endpoin
   fetchEvents(){
     axios
       .get(`${ROOT}/events/?limit=30`)

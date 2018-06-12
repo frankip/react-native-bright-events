@@ -522,3 +522,7 @@ textarea {
 img .thumbnail{
     height: 400px;
 }
+
+.email-view{
+    font-size: 12px;
+}

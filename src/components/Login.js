@@ -17,6 +17,8 @@ class Login extends Component {
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
+  
+  // sends payload to the api login endpoint
   handleOnSubmit(e) {
     e.preventDefault();
     let payload = { 
@@ -36,6 +38,8 @@ class Login extends Component {
           () => {}
         );
         toastr.success(response.data.message);
+
+        // save user ans token to local storage 
         localStorage.setItem("access_token", response.data.access_token);
         localStorage.setItem("user", response.data.user);
         this.props.history.push("/");
