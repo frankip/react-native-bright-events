@@ -72,6 +72,7 @@
       "!**/vendor/**",
       "!**/src/index.js",
       "!**/src/Routes.js",
+      "!**/src/componenents/myEvents.js",
       "!**/*.eslintrc.js",
       "!**/coverage/**",
       "!**/*.config.js"

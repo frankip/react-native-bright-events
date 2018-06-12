@@ -36,7 +36,6 @@ function setup() {
 }
 
 describe('Register Component', () => {
-  // const wrapper = shallow(<Registration />);
   const wrapper = setup();
 
   it('renders without crashing', () => {
