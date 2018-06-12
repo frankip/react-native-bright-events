@@ -49,4 +49,19 @@ or with yarn
 $ yarn  test -- -u --coverage
 ````
 
+### Features
 
+* sign up and login 
+
+![](https://github.com/frankip/reactjs-bright-events/blob/master/public/screenshots/Screen%20Shot%202018-06-12%20at%2019.30.40.png)
+
+* view events
+
+* Add events
+![](https://github.com/frankip/reactjs-bright-events/blob/master/public/screenshots/Screen%20Shot%202018-06-12%20at%2019.31.51.png)
+
+
+* View Edit and delete  events 
+![](https://github.com/frankip/reactjs-bright-events/blob/master/public/screenshots/Screen%20Shot%202018-06-12%20at%2019.59.00.png)
+
+![](https://github.com/frankip/reactjs-bright-events/blob/master/public/screenshots/Screen%20Shot%202018-06-12%20at%2019.32.13.png)
