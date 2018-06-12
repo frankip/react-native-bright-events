@@ -46,6 +46,7 @@
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",
     "material-ui": "^0.20.0",
+    "password-validator": "^4.1.1",
     "react": "^16.3.2",
     "react-devtools": "^3.2.1",
     "react-dom": "^16.3.2",
@@ -53,7 +54,8 @@
     "react-notify-toast": "^0.4.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "validator": "^10.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

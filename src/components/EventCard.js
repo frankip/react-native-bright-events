@@ -9,7 +9,7 @@ class EventCard extends Component {
     return (
       <Column>
         <div className="callout">
-          <img className="thumbnail" src="https://source.unsplash.com/random" alt="event_image" />
+          <img className="thumbnail" src="http://via.placeholder.com/350x250/?text=Brightevents" alt="event_image" />
           <h5>{values.event}</h5>
           <i className="fa fa-calendar fa-2x fa-fw" aria-hidden="true" />
           <p className="small">{values.date}</p>

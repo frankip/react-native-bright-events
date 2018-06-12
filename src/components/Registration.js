@@ -3,29 +3,44 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import toastr from "toastr";
 
+import Validator from 'validator';
+import passwordValidator from "password-validator";
+
 // local imports 
 import { ROOT } from "./url_config";
+
+const validpassword = new passwordValidator();
+validpassword.is().min(6)
+  .is().max(20)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
+  .has().not().spaces();
 
 class Registration extends Component {
   constructor() {
     super();
     this.state = {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
+      payload: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
       isLoged : false
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
+  
+  // sends the registration payload to the api
   handleOnSubmit(e) {
     e.preventDefault();
-    let payload = {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      email: this.state.email,
-      password: this.state.password,
-    }
+    let payload = this.state.payload
+
+    if (!Validator.equals(payload.password, payload.confirmPassword)){
+      toastr.warning('Passwords do not match')
+    } else {
     axios.post(ROOT + "/auth/register/", payload)
     .then((response) => {
     toastr.success(response.data.message);
@@ -36,11 +51,14 @@ class Registration extends Component {
       toastr.warning(error.response.data.message);
     });
   }
+  }
 
   handleChange = e => {
-    this.setState({ ...this.state, [e.target.name]: e.target.value });
     
-    
+    // this.setState({ ...this.state, [e.target.name]: e.target.value });
+    const { payload } = this.state;
+    payload[e.target.name] = e.target.value;
+    this.setState({ ...this.state, payload });
   };
   render() {
     return <div className="body">
@@ -85,7 +103,7 @@ class Registration extends Component {
                 <input type="password" name="password" placeholder="password" required ref="password" onChange={this.handleChange} />
                 </div>
                 <div className="field-wrap">
-                <input type="password" name="password" placeholder="confirm password" required ref="password" onChange={this.handleChange} />
+                <input type="password" name="confirmPassword" placeholder="confirm password" required ref="password" onChange={this.handleChange} />
                 </div>
                 <button type="submit" value="submit" className="button button-block">
                   Get Started
