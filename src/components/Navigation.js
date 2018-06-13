@@ -5,19 +5,18 @@ import { Link } from 'react-router-dom';
 import { isTokenExpired } from './url_config';
 
 class Navigation extends Component {
-  constructor(props){
-    super()
-      this.state = {
-        isLogged: false,
-        token: localStorage.getItem("access_token"),
-        user: localStorage.getItem('user')
-      }
+  constructor() {
+    super();
+    this.state = {
+      isLogged: false,
+      token: localStorage.getItem('access_token'),
+      user: localStorage.getItem('user'),
+    };
   }
 
   // resets the local storage to null
-  handleLogout = () => {
+  handleLogout() {
     localStorage.clear();
-
   }
   render() {
     return (
@@ -27,37 +26,37 @@ class Navigation extends Component {
           <div className="nav-mobile">
             <ul className="left">
               <li>
-                <Link to="/" className="fa fa-home">Home</Link>
+                <Link href to="/" className="fa fa-home">Home</Link>
               </li>
-              {this.state.token && !isTokenExpired(this.state.token)?
-              <span>
-              <li>
-                <Link to="/myevents" className="fa fa-book">My Events</Link>
-              </li>
-              <li>
-                <Link to="/" className="fa fa-fire" >Most Popular</Link>
-              </li>
-              </span>:null
+              {this.state.token && !isTokenExpired(this.state.token) ?
+                <span>
+                  <li>
+                    <Link href to="/myevents" className="fa fa-book">My Events</Link>
+                  </li>
+                  <li>
+                    <Link href to="/" className="fa fa-fire" >Most Popular</Link>
+                  </li>
+                </span> : null
               }
             </ul>
             <ul className="right">
-            { this.state.token && !isTokenExpired(this.state.token)?
+              { this.state.token && !isTokenExpired(this.state.token) ?
                 <span>
                   <li>
-                    <Link to="/" className="fa fa-user"> {this.state.user}</Link>
+                    <Link href to="/" className="fa fa-user"> {this.state.user}</Link>
                   </li>
                   <li>
-                    <Link to="/login" onClick={this.handleLogout}> 
+                    <Link href to="/login" onClick={this.handleLogout}>
                       logout <i className="fa fa-sign-out" />
                     </Link>
                   </li>
                 </span>
                 :
                 <li>
-                  <Link to="/login" className="fa fa-sign-in"> Login</Link>
-                </li> 
+                  <Link href to="/login" className="fa fa-sign-in"> Login</Link>
+                </li>
             }
-              
+
             </ul>
           </div>
         </nav>

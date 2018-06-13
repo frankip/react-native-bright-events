@@ -1,48 +1,53 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import toastr from "toastr";
-import jwtDecode from "jwt-decode";
+import toastr from 'toastr';
+import jwtDecode from 'jwt-decode';
 
-import Dialog from "material-ui/Dialog";
-import RaisedButton from "material-ui/RaisedButton";
-import DatePicker from "material-ui/DatePicker";
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
 
 // foundation
-import { Row, Column } from "react-foundation-components/lib/global/grid";
+import { Row, Column } from 'react-foundation-components/lib/global/grid';
 
 // local imports
 import Navigation from './Navigation';
-import { instance, ROOT, isTokenExpired } from "./url_config";
+import { instance, ROOT, isTokenExpired } from './url_config';
 
 const styles = {
   formstyle: {
     margin: 2,
     padding: 4,
-  }
-}
+  },
+};
 
 class EventCardDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: localStorage.getItem("access_token"),
+      token: localStorage.getItem('access_token'),
       open: false,
       isOpened: false,
       event: {},
-      rsvpList: []
+      rsvpList: [],
     };
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.toggleOpenState = this.toggleOpenState.bind(this);
+    this.toggleDeleteDialog = this.toggleDeleteDialog.bind(this);
   }
   // toggle opening and closing dialog
-  toggleOpenState = () => {
+  toggleOpenState() {
     this.setState({
-      open: !this.state.open
+      open: !this.state.open,
     });
-  };
+  }
 
   // Openning and clossing the delete action dialog
-  toggleDeleteDialog = () => {
+  toggleDeleteDialog() {
     this.setState({ isOpened: !this.state.isOpened });
-  };
+  }
 
   // fetch event details if there are no props
   getEventFromId() {
@@ -52,25 +57,25 @@ class EventCardDetails extends Component {
       .then(response => {
         this.setState({ event: response.data });
       })
-      .catch(function(error) {
+      .catch(function (error) {
       });
   }
 
   // onchange handler for date picker
   setDate(x, date) {
-    let event = Object.assign({}, this.state.event);
-    event["date"] = date.toDateString();
+    const event = Object.assign({}, this.state.event);
+    event.date = date.toDateString();
     this.setState({ event });
   }
 
   // fetch RSVP list
-  retrieveRSVPList(){
-    let eventId = this.props.match.params.id;
+  retrieveRSVPList() {
+    const eventId = this.props.match.params.id;
 
     instance
       .get(`${ROOT}/events/${eventId.toString()}/rsvp/`)
       .then(response => {
-        this.setState({ rsvpList: response.data})
+        this.setState({ rsvpList: response.data });
       })
       .catch(function (error) {
       });
@@ -82,84 +87,83 @@ class EventCardDetails extends Component {
     } else {
       this.getEventFromId();
     }
-    this.retrieveRSVPList()
+    this.retrieveRSVPList();
   }
 
   // Make rsvp reservation
-  handleRsvp = () => {
-    let eventId = this.props.match.params.id;
+  handleRsvp() {
+    const eventId = this.props.match.params.id;
 
     instance
       .post(`${ROOT}/events/${eventId.toString()}/rsvp/`)
       .then(response => {
         toastr.success(response.data.message);
-        
       })
-      .catch(function(error) {
+      .catch(function (error) {
         toastr.warning(error.response.data.message);
       });
-  };
+  }
 
   // Edit and post event
-  handleEdit = () => {
-    let eventId = this.props.match.params.id;
-    let payload = this.state.event;
-    
-    this.toggleOpenState()
+  handleEdit() {
+    const eventId = this.props.match.params.id;
+    const payload = this.state.event;
+
+    this.toggleOpenState();
 
     instance
       .put(`${ROOT}/events/${eventId.toString()}/`, payload)
       .then(() => {
-          toastr.success('Event updated succesfully');
-        })
+        toastr.success('Event updated succesfully');
+      })
       .catch(function (error) {
-        toastr.warning("Failed to update ");
+        toastr.warning('Failed to update ');
       });
-      this.props.history.replace(`/events/${eventId.toString()}`);
-  };
+    this.props.history.replace(`/events/${eventId.toString()}`);
+  }
 
   // delete event
-  handleDelete = () => {
-    let IDEvent = this.state.event.id;
-    this.toggleOpenState()
+  handleDelete() {
+    const IDEvent = this.state.event.id;
+    this.toggleDeleteDialog();
     instance
       .delete(`${ROOT}/events/${IDEvent.toString()}`)
       .then(response => {
         toastr.success(response.data.message);
-        this.props.history.replace("/myevents");
+        this.props.history.replace('/myevents');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         toastr.warning(error.response.data.message);
       });
-  };
+  }
 
-  // get data from input and update state 
-  handleChange =  e => {
-    let event = Object.assign({}, this.state.event);
+  // get data from input and update state
+  handleChange(e) {
+    const event = Object.assign({}, this.state.event);
     event[e.target.name] = e.target.value;
     this.setState({ event });
-  };
+  }
 
   render() {
     // action buttons for material UI dialog
     const action = [
       <RaisedButton
         label="close"
-        secondary={true}
+        secondary
         style={{ float: 'left' }}
         onClick={this.toggleOpenState}
       />,
       <RaisedButton
         label="Submit"
-        primary={true}
-        keyboardFocused={true}
+        primary
+        keyboardFocused
         onClick={this.handleEdit}
-      />
+      />,
     ];
     const actionDelete = [
       <RaisedButton
         label="Cancel"
-        primary={true}
+        primary
         style={{ float: 'left' }}
         onClick={this.toggleDeleteDialog}
       />,
@@ -172,7 +176,7 @@ class EventCardDetails extends Component {
 
     const rsvps = this.state.rsvpList.map((rsvp, idx) => (
       <div key={idx}>
-        <h5>{rsvp.name}</h5> <span className='email-view'>{rsvp.email}</span>
+        <h5>{rsvp.name}</h5> <span className="email-view">{rsvp.email}</span>
       </div>
     ));
 
@@ -190,17 +194,19 @@ class EventCardDetails extends Component {
         <section className="row event-description">
           <div className="column large-8 small-12">
             <h3>Description</h3>
-            {this.state.event.description ? 
+            {this.state.event.description ?
               <p>{this.state.event.description}</p>
             :
-            <p> There is no description for this event </p>
+              <p> There is no description for this event </p>
             }
-            {this.state.token && !isTokenExpired(this.state.token) ? <div>
-                {this.state.event.created_by === jwtDecode(this.state.token).sub ? <div className="row interactions">
+            {this.state.token && !isTokenExpired(this.state.token) ?
+              <div>
+                {this.state.event.created_by === jwtDecode(this.state.token).sub ?
+                  <div className="row interactions">
                     <div className="left">
                       <li>
                         <button href="#" onClick={this.toggleOpenState}>
-                          <i className="fa fa-pencil fa-3x" />{" "}
+                          <i className="fa fa-pencil fa-3x" />{' '}
                         </button>
                       </li>
                       <li>
@@ -209,27 +215,32 @@ class EventCardDetails extends Component {
                         </button>
                       </li>
                     </div>
-                  </div> : null}
-              </div> : null}
+                  </div>
+                : null}
+              </div>
+            : null}
           </div>
-          {this.state.token && !isTokenExpired(this.state.token) ? <div className="column large-3 small-12">
-              {this.state.event.created_by === jwtDecode(this.state.token).sub ? 
-              <div>
+          {this.state.token && !isTokenExpired(this.state.token) ?
+            <div className="column large-3 small-12">
+              {this.state.event.created_by === jwtDecode(this.state.token).sub ?
+                <div>
                   <h3> Guest list </h3>
-                  {this.state.rsvpList.length === 0 ? 
-                  <p>There are no guests for your event</p> 
-                  : <div>
+                  {this.state.rsvpList.length === 0 ?
+                    <p>There are no guests for your event</p>
+                  :
+                    <div>
                       {rsvps}
                     </div>
                   }
-                </div> 
-                : <button className="button expanded" onClick={this.handleRsvp}>
+                </div>
+                :
+                <button className="button expanded" onClick={this.handleRsvp}>
                   RSVP
                 </button>}
-            </div> 
+            </div>
             : null
             }
-          <Dialog title="Update Event" actions={action} modal={true} open={this.state.open} onRequestClose={this.toggleOpenState} autoScrollBodyContent={true}>
+          <Dialog title="Update Event" actions={action} modal open={this.state.open} onRequestClose={this.toggleOpenState} autoScrollBodyContent>
             <Row>
               <form method="POST" onSubmit={this.handleSubmit}>
                 <Row>
@@ -245,12 +256,12 @@ class EventCardDetails extends Component {
                     <input type="text" name="location" placeholder="Event Location" required value={this.state.event.location} onChange={this.handleChange} />
                   </Column>
                   <Column large={6}>
-                    <DatePicker hintText="Event date" name="date" fullWidth={true} inputStyle={styles.formstyle} defaultDate={new Date(this.state.event.date)} onChange={(x, date) => this.setDate(x, date)} />
+                    <DatePicker hintText="Event date" name="date" fullWidth inputStyle={styles.formstyle} defaultDate={new Date(this.state.event.date)} onChange={(x, date) => this.setDate(x, date)} />
                   </Column>
                 </Row>
                 <Row>
                   <Column small={12} medium={12} large={12}>
-                  <textarea name="description" type="text" placeholder="Event description" value={this.state.event.description || ""} cols="30" rows="5" onChange={this.handleChange} />
+                    <textarea name="description" type="text" placeholder="Event description" value={this.state.event.description || ''} cols="30" rows="5" onChange={this.handleChange} />
                   </Column>
                 </Row>
               </form>
@@ -263,7 +274,7 @@ class EventCardDetails extends Component {
             onRequestClose={this.toggleDeleteDialog}
           >
            Are you sure you want to delete this event?
-        </Dialog>
+          </Dialog>
         </section>
       </div>
     );

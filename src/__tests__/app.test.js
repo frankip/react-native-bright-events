@@ -2,6 +2,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
+
+import expect from "expect";
 import App from '../App';
 
 describe('renders without crashing', () => {

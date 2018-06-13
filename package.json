@@ -33,7 +33,6 @@
     "react-router-enzyme-context": "^1.2.0",
     "react-test-renderer": "^16.2.0",
     "sinon": "^5.1.0",
-    "toastr": "^2.1.4",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1",
     "ws": "3.3.2"
@@ -55,6 +54,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "toastr": "^2.1.4",
     "validator": "^10.3.0"
   },
   "scripts": {

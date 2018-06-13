@@ -4,7 +4,7 @@ import React from 'react';
 import ReactRouterEnzymeContext from 'react-router-enzyme-context';
 import Adapter from 'enzyme-adapter-react-16';
 import expect from 'expect';
-import Enzyme, { mount, shallow } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import sinon from 'sinon';
 import { shallowToJson } from 'enzyme-to-json';
 import Registration from '../components/Registration';
@@ -62,20 +62,10 @@ describe('Register Component', () => {
   it('should have one one form element', () => {
     expect(wrapper.find('form').length).toEqual(1);
   });
-
-  describe('signup form ', () => {
-    it('should call onsubmit when form is submitted', () => {
-      // const form = wrapper.find('[type="submit"]');
-      // console.log(form.debug());
-
-      // form.simulate('submit');
-      // expect(fakeSubmit.calledOnce).toBe(true);
-      const form = wrapper.find('form');
-      form.instance().onSubmit = sinon.spy();
-      form.simulate('submit');
-      // console.log(form.instance().onSubmit);
-
-      expect(fakeSubmit.calledOnce).toBe(false);
-    });
+  it('should call onsubmit when form is submitted', () => {
+    const form = wrapper.find('form');
+    form.instance().onSubmit = sinon.spy();
+    form.simulate('submit');
+    expect(fakeSubmit.calledOnce).toBe(false);
   });
 });

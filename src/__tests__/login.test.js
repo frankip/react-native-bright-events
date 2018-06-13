@@ -2,7 +2,7 @@
 import 'jsdom-global/register';
 import React from 'react';
 import { shallowToJson } from 'enzyme-to-json';
-import Enzyme, { mount, shallow } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import ReactRouterEnzymeContext from 'react-router-enzyme-context';
 import Adapter from 'enzyme-adapter-react-16';
 import sinon from 'sinon';

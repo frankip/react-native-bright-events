@@ -39,5 +39,8 @@
         "no-console": 0,
         "react/sort-comp": 0,
         "arrow-parens":"off"
+    },
+    "env": {
+        "jest": true
     }
 }
