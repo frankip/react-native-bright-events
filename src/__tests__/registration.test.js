@@ -49,9 +49,7 @@ describe('Register Component', () => {
     expect(wrapper.state().payload.password).toEqual('');
   });
   it('renders appropriate number of inputs', () => {
-    const htmlwrapper = setup();
-    // expect(wrapper.find('input').length).toEqual(5);
-    expect(htmlwrapper.find('input').length).toEqual(5);
+    expect(wrapper.find('input').length).toEqual(5);
   });
   it('should have one submit  button', () => {
     expect(wrapper.find('button').length).toEqual(1);
