@@ -1,6 +1,6 @@
 
 [![Build Status](https://travis-ci.org/frankip/react-native-bright-events.svg?branch=develop)](https://travis-ci.org/frankip/react-native-bright-events)
-[![Coverage Status](https://coveralls.io/repos/github/frankip/react-native-bright-events/badge.svg?branch=master)](https://coveralls.io/github/frankip/react-native-bright-events?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/frankip/reactjs-bright-events/badge.svg?branch=master)](https://coveralls.io/github/frankip/reactjs-bright-events?branch=master)
 ### Bright Events 
 
 Bright events is an event mangement platform for organizers to create and manage different types of events 
