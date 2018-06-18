@@ -39,6 +39,7 @@ class Main extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.toggleOpenState = this.toggleOpenState.bind(this);
   }
 
   // retrieve events from api endpoin
@@ -103,19 +104,17 @@ class Main extends Component {
     let searchStr = '';
     searchStr = e.target.value.toLowerCase().trim();
 
-    const searchRes = [];
-
     if (searchStr !== '') {
-      for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
-        const eventItem = events[eventIndex];
-
-        if (eventItem.event.toLowerCase().includes(searchStr,
-        ) || eventItem.location.toLowerCase().includes(searchStr)) {
-          searchRes.push(eventItem);
-        }
-      }
-
-      this.setState({ eventList: searchRes });
+      axios
+        .get(`${ROOT}/events/search/?q=${searchStr}`)
+        .then(response => {
+          this.setState(
+            { ...this.state, eventList: response.data },
+          );
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } else { this.setState({ eventList: events }); }
   }
 

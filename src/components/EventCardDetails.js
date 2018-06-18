@@ -36,6 +36,7 @@ class EventCardDetails extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.toggleOpenState = this.toggleOpenState.bind(this);
     this.toggleDeleteDialog = this.toggleDeleteDialog.bind(this);
+    this.handleRsvp = this.handleRsvp.bind(this);
   }
   // toggle opening and closing dialog
   toggleOpenState() {
