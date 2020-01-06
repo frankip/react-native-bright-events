@@ -1,58 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react'
+
 import { Link } from 'react-router-dom';
-import axios from "axios";
-import toastr from "toastr";
 
-// local imports
-import { ROOT } from "./url_config";
+import { useFormik } from "formik"
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      loggedIn: false,
-      access_token: ''
-    };
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
-  }
-  handleOnSubmit(e) {
-    e.preventDefault();
-    let payload = { 
-      email: this.state.email, 
-      password: this.state.password 
-    };
-
-    axios
-      .post(ROOT + "/auth/login/", payload)
-      .then((response) => {
-        this.setState(
-          {
-            status: response.status,
-            loggedIn: true,
-            access_token: response.data.access_token
+const Login = () => {
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
           },
-          () => {}
-        );
-        toastr.success(response.data.message);
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("user", response.data.user);
-        this.props.history.push("/");
-      })
-      .catch(error => {
-        toastr.warning(error.response.data.message);
-      });
-    e.target.reset();
-  }
- 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  render() {
+          onSubmit(values) {
+            console.log(values)
+          }
+    })
     return (
-            <div className="body">
+        <div className="body">
               <div className="intro">
                 <div>
                   <h1>
@@ -77,12 +40,24 @@ class Login extends Component {
                 <div className="tab-content">
                   <div id="login">
                     <h3>Welcome Back!</h3>
-                    <form method="POST" onSubmit={this.handleOnSubmit}>
+                    <form onSubmit={formik.handleSubmit}>
                       <div className="field-wrap">
-                      <input type="email" name="email" placeholder="Email" required onChange={this.handleChange} />
+                        <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Email" 
+                        required 
+                        onChange={formik.handleChange}
+                        value={formik.values.name} />
                       </div>
                       <div className="field-wrap">
-                      <input type="password" name="password" placeholder="password" required onChange={this.handleChange} />
+                      <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="password" 
+                        required 
+                        onChange={formik.handleChange}
+                        value={formik.values.name} />
                       </div>
                       <p className="forgot">
                         <Link to="/signup">Forgot Password?</Link>
@@ -97,9 +72,7 @@ class Login extends Component {
                 </div>
               </div>
             </div>
-      
-    );
-  }
+    )
 }
 
-export default Login;
+export default Login
