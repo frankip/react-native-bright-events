@@ -2,6 +2,9 @@ import React from "react"
 import { Link } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 
+import * as ROUTES from '../constants/routes';
+
+
 import { useFormik } from "formik"
 
 export default function ContactForm() {
@@ -36,10 +39,10 @@ export default function ContactForm() {
     <div className="form">
       <ul className="tab-group">
         <li className="tab active">
-          <Link href to="/signup">Signup</Link>
+          <Link href to={ROUTES.SIGN_UP}>Sign Up</Link>
         </li>
         <li className="tab">
-          <Link href to="/login">login</Link>
+          <Link href to={ROUTES.SIGN_IN}>Sign In</Link>
         </li>
       </ul>
       <div className="tab-content">

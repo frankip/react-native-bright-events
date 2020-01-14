@@ -1,8 +1,10 @@
 import React from 'react'
-
 import { Link } from 'react-router-dom';
-
 import { useFormik } from "formik"
+
+
+import * as ROUTES from '../constants/routes';
+
 
 const Login = () => {
     const formik = useFormik({
@@ -31,10 +33,10 @@ const Login = () => {
               <div className="form">
                 <ul className="tab-group">
                   <li className="tab">
-                    <Link to="/signup">Signup</Link>
+                    <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
                   </li>
                   <li className="tab active">
-                    <Link to="/login">login</Link>
+                    <Link to={ROUTES.SIGN_IN}>Sign In</Link>
                   </li>
                 </ul>
                 <div className="tab-content">
