@@ -7,11 +7,11 @@ import App from './App';
 import Firebase, { FirebaseContext } from './Firebase';
 
 const Application = () => (
+<FirebaseContext.Provider value={Firebase}>
   <MuiThemeProvider>
-    <FirebaseContext.Provider value={Firebase}>
     <App />
-    </FirebaseContext.Provider>
   </MuiThemeProvider>
+ß</FirebaseContext.Provider>
 );
 
 ReactDOM.render(<Application />, document.getElementById('root'));

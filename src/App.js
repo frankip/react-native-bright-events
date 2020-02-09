@@ -10,7 +10,7 @@ class App extends Component {
     this.state = {
       isLoggedIn: false,
       token: '',
-
+      authUser: null,
     };
   }
 
@@ -19,7 +19,7 @@ class App extends Component {
         <Router>
           <div className="App">
             {/* <Navigation /> */}
-            <Approutes />
+            <Approutes authUser={this.state.authUser}/>
           </div>
         </Router>
     );

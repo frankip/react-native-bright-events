@@ -1,20 +1,41 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { useFormik } from "formik"
 
 
 import * as ROUTES from '../constants/routes';
+import Firebase, { withFirebase } from '../Firebase'
+
+import { doSignInWithEmailAndPassword, FirebaseAppAuth } from "../Firebase/firebaseConfig";
 
 
-const Login = () => {
+const handleSubmit = (values, actions) => {
+  const user = doSignInWithEmailAndPassword( values.email, values.password)
+  .then (result => {
+    console.log('logged in', result);
+
+  }).catch (error => {
+    console.log(error);
+    alert(JSON.stringify(error, null, 2));
+  });
+
+  
+  actions.resetForm();
+  actions.setSubmitting(false);
+  return user
+};
+
+const LoginForm = () => {
     const formik = useFormik({
         initialValues: {
             email: "",
             password: "",
           },
-          onSubmit(values) {
+          enableReinitialize: true,
+          onSubmit: (values, actions) => {
             console.log(values)
-          }
+            handleSubmit(values, actions)
+          },
     })
     return (
         <div className="body">
@@ -76,5 +97,7 @@ const Login = () => {
             </div>
     )
 }
+
+const Login = withRouter(withFirebase(LoginForm));
 
 export default Login

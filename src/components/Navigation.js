@@ -11,6 +11,7 @@ class Navigation extends Component {
         isLogged: false,
         token: localStorage.getItem("access_token"),
         user: localStorage.getItem('user')
+        
       }
   }
 

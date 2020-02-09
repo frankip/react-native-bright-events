@@ -1,13 +1,47 @@
 import React from "react"
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import * as firebase from 'firebase/app';
+import { useFormik, ErrorMessage } from "formik"
+
 
 import * as ROUTES from '../constants/routes';
+import Firebase, { FirebaseContext, withFirebase } from '../Firebase'
+import { doCreateUserWithEmailAndPassword, FirebaseAppAuth } from "../Firebase/firebaseConfig";
 
 
-import { useFormik } from "formik"
+const validate = values => {
+  const errors = {};
+  if (!values.first_name) {
+    errors.first_name = 'Required';
+  } else if (values.first_name.length > 15) {
+    errors.first_name = 'Must be 15 characters or less';
+  }
 
-export default function ContactForm() {
+  if (!values.last_name) {
+    errors.last_name = 'Required';
+  } else if (values.last_name.length > 20) {
+    errors.last_name = 'Must be 20 characters or less';
+  }
+
+  if (!values.email) {
+    errors.email = 'Required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  return errors;
+};
+
+
+const INITIAL_STATE = {
+  first_name: "",
+  last_name:"",
+  email: "",
+  password: "",
+  confirmPassword:""
+};
+
+const SignUpForm = () => {
 
     const formik = useFormik({
         initialValues: {
@@ -17,9 +51,29 @@ export default function ContactForm() {
             password: "",
             confirmPassword:""
           },
-          onSubmit: (values, { setSubmitting }) => {
-            console.log('---->',JSON.stringify(values, null, 2))
-            setSubmitting(false);
+          validate,
+          onSubmit: (values, actions) => {
+            console.log(values)
+            
+
+            const user = doCreateUserWithEmailAndPassword( values.email, values.password)
+            .then (result => {
+              FirebaseAppAuth.currentUser.updateProfile({displayName: `${values.first_name} ${values.last_name}`})
+              
+              // actions.setStatus({success: true})
+              // actions.setSubmitting(false);
+              // actions.resetForm();
+              // this.props.history.push(ROUTES.SIGN_IN);
+              // console.log('rsult', this.props);
+
+            }).catch (error => {
+              console.log(error);
+              alert(JSON.stringify(error, null, 2));
+            });
+
+            actions.resetForm();
+            actions.setSubmitting(false);
+            
           },
     })
   return (
@@ -60,6 +114,7 @@ export default function ContactForm() {
                 required
                 onChange={formik.handleChange}
                 value={formik.values.name} />
+                {formik.errors.first_name ? <div>{formik.errors.first_name}</div> : null}
             </div>
             <div className="field-wrap">
               <input 
@@ -69,6 +124,7 @@ export default function ContactForm() {
                 required
                 onChange={formik.handleChange}
                 value={formik.values.name}/>
+                {formik.errors.last_name ? <div>{formik.errors.last_name}</div> : null}
             </div>
           </div>
           <div className="field-wrap">
@@ -80,6 +136,7 @@ export default function ContactForm() {
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 />
+                {formik.errors.email ? <div>{formik.errors.email}</div> : null}
           </div>
           <div className="field-wrap">
             <input 
@@ -89,6 +146,7 @@ export default function ContactForm() {
                 required
                 onChange={formik.handleChange}
                 value={formik.values.name} />
+                {formik.errors.password && formik.touched.password && formik.errors.password}
           </div>
           <div className="field-wrap">
             <input 
@@ -101,9 +159,9 @@ export default function ContactForm() {
           </div>
           <button 
                 type="submit" 
-                value="submit" 
+                value="submit"
+                disabled={formik.isSubmitting}
                 className="button button-block">
-
                 Get Started
           </button>
      </form>
@@ -115,3 +173,8 @@ export default function ContactForm() {
   </div>
   );
 }
+
+const SignUpPage = withRouter(withFirebase(SignUpForm));
+
+export default SignUpPage;
+// export { ContactForm }; 

@@ -16,10 +16,21 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   };
 const Firebase = firebase.initializeApp(firebaseConfig);
-// const FirebaseAppAuth = Firebase.auth();
-// const providers = {
-//   googleProvider: new firebase.auth.GoogleAuthProvider(),
-// };
+const FirebaseAppAuth = Firebase.auth();
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider(),
+};
+const doCreateUserWithEmailAndPassword = (email, password) =>
+  FirebaseAppAuth.createUserWithEmailAndPassword(email, password);
+
+const doSignInWithEmailAndPassword = (email, password) =>
+  FirebaseAppAuth.signInWithEmailAndPassword(email, password);
+
+const doSignOut = () => FirebaseAppAuth.signOut();
+const doPasswordReset = email => FirebaseAppAuth.sendPasswordResetEmail(email)
+const doPasswordUpdate = password => FirebaseAppAuth.currentUser.updatePassword(password)
+
 
 
 export default {Firebase};
+export { FirebaseAppAuth, doCreateUserWithEmailAndPassword,  doSignInWithEmailAndPassword};
